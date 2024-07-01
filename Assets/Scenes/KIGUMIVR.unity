@@ -6692,8 +6692,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0002755247, y: 0.00001, z: 0.043188613}
-  m_Center: {x: -2.6921043e-10, y: -2.3283064e-10, z: -0.03804227}
+  m_Size: {x: 0.0001, y: 0.0001, z: 0.0001}
+  m_Center: {x: -2.6921043e-10, y: -2.3283064e-10, z: -0.059227}
 --- !u!33 &4704913588577656825
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7629,30 +7629,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   facePairs:
-  - faceIndices: 0200000003000000120000001300000014000000150000001c0000001d000000
+  - touchIndices: e0030000e2030000e3030000e4030000e5030000e7030000e9030000eb030000ed030000ee030000f0030000f1030000f2030000f3030000f6030000f7030000f8030000f9030000fa030000
+    highlightIndices: 0200000003000000120000001300000014000000150000001c0000001d000000
     highlightMaterial: {fileID: 2100000, guid: 1ba4dac3034e3e34ea7d6074b4566e46, type: 2}
     moveX: 0
     moveY: 0
     moveZ: 1
     moveCount: 0
-  - faceIndices: 1600000017000000
-    highlightMaterial: {fileID: 2100000, guid: 98ca26aeee9750849beaaa69c6876963, type: 2}
-    moveX: 1
-    moveY: 0
-    moveZ: 0
-    moveCount: 0
-  - faceIndices: 200000002100000022000000230000001e0000001f000000
+  - touchIndices: e5030000fb030000
+    highlightIndices: 1e0000001f00000020000000210000002200000023000000
     highlightMaterial: {fileID: 2100000, guid: fb785e66edc14eb4fa8e6e317a848c2b, type: 2}
     moveX: 0
     moveY: 1
     moveZ: 0
     moveCount: 0
-  - faceIndices: 1800000019000000
+  - touchIndices: f4030000f5030000de030000
+    highlightIndices: 1600000017000000
     highlightMaterial: {fileID: 2100000, guid: 98ca26aeee9750849beaaa69c6876963, type: 2}
     moveX: 1
     moveY: 0
     moveZ: 0
     moveCount: 0
+  - touchIndices: df030000e1030000
+    highlightIndices: 1800000019000000
+    highlightMaterial: {fileID: 2100000, guid: 98ca26aeee9750849beaaa69c6876963, type: 2}
+    moveX: 1
+    moveY: 0
+    moveZ: 0
+    moveCount: 0
+  highlightOffset: 0.001
+  moveDistance: 0.0001
 --- !u!114 &8882420071102674450
 MonoBehaviour:
   m_ObjectHideFlags: 0

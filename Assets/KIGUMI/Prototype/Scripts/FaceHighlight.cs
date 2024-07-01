@@ -5,7 +5,8 @@ using System.Collections.Generic;
 [System.Serializable]
 public class FacePair
 {
-    public int[] faceIndices = new int[6]; // 6つのFace Index
+    public int[] touchIndices = new int[1]; // 触れる面のインデックス
+    public int[] highlightIndices = new int[6]; // ハイライトする面のインデックス
     public Material highlightMaterial; // ペアに対して適用するマテリアル
     public bool moveX = false; // X方向に移動するかどうかのチェックボックス
     public bool moveY = false; // Y方向に移動するかどうかのチェックボックス
@@ -24,7 +25,7 @@ public class FaceHighlight : MonoBehaviour
     public float highlightOffset = 0.01f; // ハイライトを少し上に移動するオフセット
     public float moveDistance = 0.1f; // 頂点を移動させる距離
 
-    private bool isHighlighted = false; // ハイライトされているかどうかを追跡する
+    private HashSet<int> activePairHashes = new HashSet<int>(); // アクティブなペアのハッシュを保持
     private int currentPairHash = -1; // 現在ハイライトされているペアのハッシュ
     private List<int> currentTriangleIndices = new List<int>(); // 現在ハイライトされている三角形のインデックス
 
@@ -72,7 +73,7 @@ public class FaceHighlight : MonoBehaviour
             }
         }
 
-        if (isHighlighted && triggerPressed)
+        if (triggerPressed && currentPairHash != -1)
         {
             Vector3 moveDirection = CalculateMoveDirection(currentPairHash, currentTriangleIndices[0]);
             MoveVerticesAndAdjacentFaces(currentTriangleIndices, moveDirection);
@@ -90,46 +91,30 @@ public class FaceHighlight : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter called with: " + other.gameObject.name);
         if (other.CompareTag("HighlightObject")) // 任意のオブジェクトにタグを設定して検出
         {
-            Debug.Log("HighlightObject detected: " + other.gameObject.name);
             MeshFilter otherMeshFilter = other.GetComponent<MeshFilter>();
             if (otherMeshFilter != null)
             {
                 Mesh mesh = otherMeshFilter.sharedMesh;
                 if (mesh != null && mesh.isReadable) // メッシュが読み取り可能であることを確認
                 {
-                    Debug.Log("Mesh is readable: " + mesh.name);
-                    int[] triangles = mesh.triangles;
-                    Vector3[] vertices = mesh.vertices;
-                    Vector3[] normals = mesh.normals;
+                    Vector3 localPoint = other.transform.InverseTransformPoint(transform.position);
+                    int triangleIndex = FindClosestTriangle(mesh, localPoint);
+                    Debug.Log($"Touched Triangle Index: {triangleIndex}");
 
-                    for (int i = 0; i < triangles.Length; i += 3)
+                    // 触れた面に対応するハイライト処理を呼び出す
+                    var highlightIndicesAndPairHash = GetHighlightFaceIndicesAndPairHash(triangleIndex);
+                    if (highlightIndicesAndPairHash.Item1.Count > 0)
                     {
-                        Vector3 p0 = vertices[triangles[i]];
-                        Vector3 p1 = vertices[triangles[i + 1]];
-                        Vector3 p2 = vertices[triangles[i + 2]];
-
-                        Vector3 normal = (normals[triangles[i]] + normals[triangles[i + 1]] + normals[triangles[i + 2]]).normalized;
-                        Vector3 center = (p0 + p1 + p2) / 3;
-
-                        Vector3 direction = transform.InverseTransformPoint(center) - other.transform.position;
-                        if (Vector3.Dot(normal, direction) > 0)
-                        {
-                            int triangleIndex = i / 3;
-                            var highlightIndicesAndPairHash = GetHighlightFaceIndicesAndPairHash(triangleIndex);
-                            if (highlightIndicesAndPairHash.Item1.Count > 0)
-                            {
-                                int pairIndex = facePairs.FindIndex(p => p.GetHashCode() == highlightIndicesAndPairHash.Item2);
-                                Debug.Log($"Touched Element: {pairIndex}");
-                                HighlightFaces(highlightIndicesAndPairHash.Item1, highlightIndicesAndPairHash.Item2);
-                                isHighlighted = true;
-                                currentPairHash = highlightIndicesAndPairHash.Item2;
-                                currentTriangleIndices = highlightIndicesAndPairHash.Item1;
-                                break; // ハイライトするオブジェクトが見つかったらループを抜ける
-                            }
-                        }
+                        HighlightFaces(highlightIndicesAndPairHash.Item1, highlightIndicesAndPairHash.Item2, meshFilter.mesh);
+                        activePairHashes.Add(highlightIndicesAndPairHash.Item2); // アクティブなペアのハッシュを追加
+                        currentPairHash = highlightIndicesAndPairHash.Item2;
+                        currentTriangleIndices = highlightIndicesAndPairHash.Item1;
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"No highlight indices found for triangle index {triangleIndex}");
                     }
                 }
                 else
@@ -142,34 +127,58 @@ public class FaceHighlight : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("OnTriggerExit called with: " + other.gameObject.name);
         if (other.CompareTag("HighlightObject"))
         {
-            Debug.Log("HighlightObject exited: " + other.gameObject.name);
-            ResetHighlight(); // オブジェクトから離れたらハイライトをリセット
-            isHighlighted = false;
+            ResetHighlight();
+            activePairHashes.Clear(); // アクティブなペアのハッシュをクリア
             currentPairHash = -1;
             currentTriangleIndices.Clear();
         }
+    }
+
+    int FindClosestTriangle(Mesh mesh, Vector3 point)
+    {
+        int[] triangles = mesh.triangles;
+        Vector3[] vertices = mesh.vertices;
+        float minDistance = float.MaxValue;
+        int closestTriangle = -1;
+
+        for (int i = 0; i < triangles.Length; i += 3)
+        {
+            Vector3 p0 = vertices[triangles[i]];
+            Vector3 p1 = vertices[triangles[i + 1]];
+            Vector3 p2 = vertices[triangles[i + 2]];
+
+            Vector3 center = (p0 + p1 + p2) / 3;
+            float distance = Vector3.Distance(center, point);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestTriangle = i / 3;
+            }
+        }
+
+        return closestTriangle;
     }
 
     (List<int>, int) GetHighlightFaceIndicesAndPairHash(int triangleIndex)
     {
         foreach (FacePair pair in facePairs)
         {
-            foreach (int faceIndex in pair.faceIndices)
+            foreach (int touchIndex in pair.touchIndices)
             {
-                if (faceIndex == triangleIndex)
+                if (touchIndex == triangleIndex)
                 {
-                    Debug.Log($"Found matching face index {faceIndex} in pair with hash {pair.GetHashCode()}");
-                    return (new List<int>(pair.faceIndices), pair.GetHashCode());
+                    Debug.Log($"Found matching face index {triangleIndex} in pair with hash {pair.GetHashCode()}");
+                    return (new List<int>(pair.highlightIndices), pair.GetHashCode());
                 }
             }
         }
         return (new List<int>(), -1);
     }
 
-    void HighlightFaces(List<int> triangleIndices, int pairHash)
+    void HighlightFaces(List<int> triangleIndices, int pairHash, Mesh mesh)
     {
         if (!highlightObjects.ContainsKey(pairHash))
         {
@@ -178,7 +187,6 @@ public class FaceHighlight : MonoBehaviour
         }
 
         GameObject highlightObject = highlightObjects[pairHash];
-        Mesh mesh = meshFilter.mesh;
         int[] triangles = mesh.triangles;
         Vector3[] vertices = mesh.vertices;
         Vector3[] normals = mesh.normals;
@@ -187,6 +195,12 @@ public class FaceHighlight : MonoBehaviour
 
         foreach (int triangleIndex in triangleIndices)
         {
+            if (triangleIndex * 3 + 2 >= triangles.Length) // 配列の範囲外にアクセスしないように確認
+            {
+                Debug.LogError($"Triangle index {triangleIndex} is out of bounds for the triangles array.");
+                continue;
+            }
+
             int index0 = triangles[triangleIndex * 3];
             int index1 = triangles[triangleIndex * 3 + 1];
             int index2 = triangles[triangleIndex * 3 + 2];
@@ -211,7 +225,7 @@ public class FaceHighlight : MonoBehaviour
         highlightMesh.RecalculateNormals();
 
         highlightObject.SetActive(true);
-        Debug.Log($"Highlight applied to object with pair hash {pairHash}");
+        Debug.Log($"Highlight applied to object with pair hash {pairHash} on triangle indices: {string.Join(", ", triangleIndices)}");
     }
 
     void MoveVerticesAndAdjacentFaces(List<int> triangleIndices, Vector3 moveDirection)
@@ -261,7 +275,7 @@ public class FaceHighlight : MonoBehaviour
         }
 
         // ハイライトの位置を更新
-        HighlightFaces(currentTriangleIndices, currentPairHash);
+        HighlightFaces(currentTriangleIndices, currentPairHash, mesh);
     }
 
     Vector3 CalculateMoveDirection(int pairHash, int selectedFaceIndex)
@@ -312,21 +326,6 @@ public class FaceHighlight : MonoBehaviour
         meshCollider.sharedMesh = null;
         meshCollider.sharedMesh = meshFilter.mesh;
         Debug.Log("Collider mesh updated");
-    }
-
-    public FacePair GetFacePairByIndex(int index)
-    {
-        foreach (var pair in facePairs)
-        {
-            foreach (var faceIndex in pair.faceIndices)
-            {
-                if (faceIndex == index)
-                {
-                    return pair;
-                }
-            }
-        }
-        return null;
     }
 
     public int GetTotalMoveCount()
