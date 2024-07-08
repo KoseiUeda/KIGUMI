@@ -25,9 +25,12 @@ public class FaceHighlight : MonoBehaviour
     public float highlightOffset = 0.01f; // ハイライトを少し上に移動するオフセット
     public float moveDistance = 0.1f; // 頂点を移動させる距離
 
+    private AudioManager audioManager; // AudioManagerの参照
+
     private HashSet<int> activePairHashes = new HashSet<int>(); // アクティブなペアのハッシュを保持
     private int currentPairHash = -1; // 現在ハイライトされているペアのハッシュ
     private List<int> currentTriangleIndices = new List<int>(); // 現在ハイライトされている三角形のインデックス
+    private bool wasTriggerPressed = false; // 前のフレームでトリガーボタンが押されていたかどうか
 
     void Start()
     {
@@ -35,6 +38,8 @@ public class FaceHighlight : MonoBehaviour
         meshFilter = GetComponent<MeshFilter>();
         meshCollider = GetComponent<MeshCollider>();
         displayVertices = GetComponent<DisplayVertices>(); // DisplayVerticesスクリプトの取得
+
+        audioManager = FindObjectOfType<AudioManager>(); // AudioManagerを探して参照を取得
 
         // 初期ハイライトオブジェクトをペアごとに作成してディクショナリに追加
         foreach (var pair in facePairs)
@@ -49,7 +54,7 @@ public class FaceHighlight : MonoBehaviour
             highlightMeshRenderer.material = pair.highlightMaterial;
 
             MeshFilter highlightMeshFilter = highlightObject.AddComponent<MeshFilter>();
-            Mesh highlightMesh = new Mesh();
+            UnityEngine.Mesh highlightMesh = new UnityEngine.Mesh();
             highlightMeshFilter.mesh = highlightMesh;
 
             highlightObject.SetActive(false);
@@ -73,7 +78,8 @@ public class FaceHighlight : MonoBehaviour
             }
         }
 
-        if (triggerPressed && currentPairHash != -1)
+        // トリガーボタンが押された瞬間を検出
+        if (triggerPressed && !wasTriggerPressed && currentPairHash != -1)
         {
             Vector3 moveDirection = CalculateMoveDirection(currentPairHash, currentTriangleIndices[0]);
             MoveVerticesAndAdjacentFaces(currentTriangleIndices, moveDirection);
@@ -85,8 +91,16 @@ public class FaceHighlight : MonoBehaviour
             {
                 pair.moveCount++;
                 Debug.Log($"Moved vertices of pair with hash {currentPairHash} by {moveDirection}");
+
+                // AudioManagerを通じて音を再生
+                if (audioManager != null)
+                {
+                    audioManager.PlayStrikeSound();
+                }
             }
         }
+
+        wasTriggerPressed = triggerPressed; // 現在のトリガーボタンの状態を保存
     }
 
     void OnTriggerEnter(Collider other)
@@ -96,7 +110,7 @@ public class FaceHighlight : MonoBehaviour
             MeshFilter otherMeshFilter = other.GetComponent<MeshFilter>();
             if (otherMeshFilter != null)
             {
-                Mesh mesh = otherMeshFilter.sharedMesh;
+                UnityEngine.Mesh mesh = otherMeshFilter.sharedMesh;
                 if (mesh != null && mesh.isReadable) // メッシュが読み取り可能であることを確認
                 {
                     Vector3 localPoint = other.transform.InverseTransformPoint(transform.position);
@@ -136,7 +150,7 @@ public class FaceHighlight : MonoBehaviour
         }
     }
 
-    int FindClosestTriangle(Mesh mesh, Vector3 point)
+    int FindClosestTriangle(UnityEngine.Mesh mesh, Vector3 point)
     {
         int[] triangles = mesh.triangles;
         Vector3[] vertices = mesh.vertices;
@@ -178,7 +192,7 @@ public class FaceHighlight : MonoBehaviour
         return (new List<int>(), -1);
     }
 
-    void HighlightFaces(List<int> triangleIndices, int pairHash, Mesh mesh)
+    void HighlightFaces(List<int> triangleIndices, int pairHash, UnityEngine.Mesh mesh)
     {
         if (!highlightObjects.ContainsKey(pairHash))
         {
@@ -210,7 +224,7 @@ public class FaceHighlight : MonoBehaviour
             quadVertices.Add(vertices[index2] + normals[index2] * highlightOffset);
         }
 
-        Mesh highlightMesh = highlightObject.GetComponent<MeshFilter>().mesh;
+        UnityEngine.Mesh highlightMesh = highlightObject.GetComponent<MeshFilter>().mesh;
         highlightMesh.Clear();
         highlightMesh.vertices = quadVertices.ToArray();
 
@@ -230,7 +244,7 @@ public class FaceHighlight : MonoBehaviour
 
     void MoveVerticesAndAdjacentFaces(List<int> triangleIndices, Vector3 moveDirection)
     {
-        Mesh mesh = meshFilter.mesh;
+        UnityEngine.Mesh mesh = meshFilter.mesh;
         int[] triangles = mesh.triangles;
         Vector3[] vertices = mesh.vertices;
 
