@@ -7,14 +7,15 @@ TagManager:
   - Block
   - Chisel
   - HighlightObject
+  - Onta
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - ChiselLayer
   - Water
   - UI
-  - 
+  - OntaLayer
   - 
   - 
   - 
