@@ -8,6 +8,7 @@ TagManager:
   - Chisel
   - HighlightObject
   - Onta
+  - Hammer
   layers:
   - Default
   - TransparentFX

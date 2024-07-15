@@ -5863,13 +5863,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149337325316}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.89, y: 1.002, z: -1.581}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 4, y: 1.0637, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &743568257362980589
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5919,6 +5919,7 @@ GameObject:
   - component: {fileID: 3469287837375605279}
   - component: {fileID: 3469287837375605277}
   - component: {fileID: 3469287837375605278}
+  - component: {fileID: 3469287837375605282}
   m_Layer: 0
   m_Name: Onta(0.3mm)
   m_TagString: Untagged
@@ -6451,15 +6452,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2625999599000714854}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1.5772401, y: 1.1530641, z: -1.1359593}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 3.5, y: 1.1530641, z: -1.1359593}
   m_LocalScale: {x: 89.684105, y: 89.68412, z: 3.7368386}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3981049305278064540}
   - {fileID: 1324922571}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 90, z: 0}
 --- !u!4 &3454497789469542300
 Transform:
   m_ObjectHideFlags: 0
@@ -6499,7 +6500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaacb78cad6789f4680317dcfa510a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vertexPrefab: {fileID: 0}
+  vertexPrefab: {fileID: 513473694}
 --- !u!114 &3469287837375605277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6553,7 +6554,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!64 &3469287837375605280
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6569,11 +6570,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1829165781690685683, guid: 88d9a8aae8d00b44b904a2e14d9998aa, type: 3}
 --- !u!114 &3469287837375605281
@@ -6619,6 +6620,21 @@ MonoBehaviour:
     moveCount: 0
   highlightOffset: 0.001
   moveDistance: 0.005
+--- !u!114 &3469287837375605282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149337325316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd7b62028a42a94f8da04f56a103b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialMoveStep: 0.02
+  minY: 1
+  decreaseFactor: 0.69
 --- !u!1 &3507947908643959893
 GameObject:
   m_ObjectHideFlags: 0
@@ -6636,7 +6652,7 @@ GameObject:
   - component: {fileID: 4315975277654863603}
   m_Layer: 0
   m_Name: Hammer
-  m_TagString: Untagged
+  m_TagString: Hammer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7290,7 +7306,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &5088366460471180053
 GameObject:
   m_ObjectHideFlags: 0
