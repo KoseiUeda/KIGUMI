@@ -8,13 +8,14 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>(); // AudioSourceコンポーネントを追加
+        audioSource.volume = 0.4f; // 音量を0.7に設定
     }
 
     public void PlayStrikeSound()
     {
         if (strikeSound != null && audioSource != null)
         {
-            audioSource.PlayOneShot(strikeSound);
+            audioSource.PlayOneShot(strikeSound, 0.4f); // 音量0.7で音声クリップを再生
         }
     }
 }
