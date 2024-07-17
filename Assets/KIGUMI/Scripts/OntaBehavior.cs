@@ -14,28 +14,18 @@ public class OntaBehavior : MonoBehaviour
     public float carvingDecreaseFactor = 0.98f; // 削りによる減少係数の変化
     private float carvingImpact = 0.002f;  // 削りの影響量
     private bool isInserted = false;       // 挿入が完了したかどうかを示すフラグ
-    private bool hasBeenCarved = false;    // 削る処理が行われたかどうかを示すフラグ
-    private Rigidbody rb;                  // Rigidbodyへの参照
 
     void Start()
     {
         currentMoveStep = initialMoveStep;  // Start時に初期移動ステップを設定
-        rb = GetComponent<Rigidbody>();     // Rigidbodyコンポーネントを取得
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Hammer" && canMove && !isInserted)  // ハンマーがオブジェクトに触れたかどうか
         {
-            if (!hasBeenCarved)
-            {
-                Debug.Log("Onta needs to be carved before it can be hammered into place.");
-                return;
-            }
-
             Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");  // 移動前のステップをログに出力
-
-            if (CheckOverlap() && transform.position.y - currentMoveStep > minY)
+            if (transform.position.y - currentMoveStep > minY)
             {
                 transform.position -= new Vector3(0, currentMoveStep, 0);
                 currentMoveStep *= decreaseFactor;  // 移動ステップを減少
@@ -48,7 +38,8 @@ public class OntaBehavior : MonoBehaviour
             }
             else
             {
-                Debug.Log("Onta and Menta are overlapping. Cannot move.");
+                transform.position = new Vector3(transform.position.x, minY, transform.position.z);  // Y座標が最小値に達した場合
+                isInserted = CheckInsertion();  // 挿入チェック
             }
         }
     }
@@ -64,7 +55,6 @@ public class OntaBehavior : MonoBehaviour
         carvingCount++;  // 削り回数をカウント
         initialMoveStep += carvingImpact;  // 削りの影響量に応じて初期移動距離を増加
         decreaseFactor *= carvingDecreaseFactor;  // 削るほど減少係数も調整
-        hasBeenCarved = true;  // 削る処理が行われたことを示すフラグを設定
 
         // currentMoveStep を更新
         currentMoveStep = initialMoveStep;
@@ -76,19 +66,17 @@ public class OntaBehavior : MonoBehaviour
         }
     }
 
-    bool CheckOverlap()
+    bool CheckInsertion()
     {
-        Collider[] colliders = Physics.OverlapBox(transform.position, GetComponent<Collider>().bounds.size / 2, Quaternion.identity);
+        // Mentaの位置とサイズを取得
+        Collider mentaCollider = GameObject.FindWithTag("Menta").GetComponent<Collider>();
+        Bounds mentaBounds = mentaCollider.bounds;
 
-        foreach (Collider collider in colliders)
-        {
-            if (collider.CompareTag("Menta"))
-            {
-                Debug.Log("Overlap detected with Menta.");
-                return false;
-            }
-        }
+        // Ontaの位置とサイズを取得
+        Collider ontaCollider = GetComponent<Collider>();
+        Bounds ontaBounds = ontaCollider.bounds;
 
-        return true;
+        // Ontaの底面がMentaの上面に収まっているかチェック
+        return ontaBounds.min.y <= mentaBounds.max.y;
     }
 }
