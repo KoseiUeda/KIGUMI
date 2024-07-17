@@ -3027,26 +3027,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioDataList:
   - minStep: 0
-    maxStep: 0.0008
-    source: {fileID: 1911289049}
-  - minStep: 0.0008
     maxStep: 0.001
-    source: {fileID: 2146634810}
+    source: {fileID: 1388997127}
   - minStep: 0.001
     maxStep: 0.003
-    source: {fileID: 1023501420}
+    source: {fileID: 1911289049}
   - minStep: 0.003
     maxStep: 0.005
-    source: {fileID: 1008380815}
+    source: {fileID: 2146634810}
   - minStep: 0.005
-    maxStep: 0.009
+    maxStep: 0.008
+    source: {fileID: 1023501420}
+  - minStep: 0.008
+    maxStep: 0.01
+    source: {fileID: 1008380815}
+  - minStep: 0.01
+    maxStep: 0.015
     source: {fileID: 318352791}
-  - minStep: 0.009
+  - minStep: 0.015
     maxStep: 0.02
     source: {fileID: 1963778368}
-  - minStep: 0.009
-    maxStep: 0.02
-    source: {fileID: 1963778368}
+  - minStep: 0.02
+    maxStep: 1
+    source: {fileID: 513473696}
 --- !u!1 &1137542477
 GameObject:
   m_ObjectHideFlags: 0
