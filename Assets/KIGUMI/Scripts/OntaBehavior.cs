@@ -3,14 +3,6 @@ using UnityEngine;
 public class OntaBehavior : MonoBehaviour
 {
     public float initialMoveStep = 0.02f;  // 初期移動ステップ
-<<<<<<< HEAD
-    public float minY = 1.0f;             // 最小Y座標（移動停止位置）
-    public float decreaseFactor = 0.94f;  // 移動ステップ減少係数
-    private float currentMoveStep;        // 現在の移動ステップ
-    private bool canMove = true;          // 移動可能フラグ
-    private float cooldown = 0.5f;        // 冷却時間
-    public SoundManager soundManager;     // SoundManagerへの参照
-=======
     public float minY = 1.0f;              // 最小Y座標（移動停止位置）
     public float decreaseFactor = 0.94f;   // 移動ステップ減少係数
     private float currentMoveStep;         // 現在の移動ステップ
@@ -22,21 +14,30 @@ public class OntaBehavior : MonoBehaviour
     public float carvingDecreaseFactor = 0.98f; // 削りによる減少係数の変化
     private float carvingImpact = 0.002f;  // 削りの影響量
     private bool isInserted = false;       // 挿入が完了したかどうかを示すフラグ
->>>>>>> parent of b626513 (a)
+    private bool hasBeenCarved = false;    // 削る処理が行われたかどうかを示すフラグ
+    private Rigidbody rb;                  // Rigidbodyへの参照
 
     void Start()
     {
         currentMoveStep = initialMoveStep;  // Start時に初期移動ステップを設定
+        rb = GetComponent<Rigidbody>();     // Rigidbodyコンポーネントを取得
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hammer" && canMove)  // ハンマーがオブジェクトに触れたかどうか
+        if (other.gameObject.tag == "Hammer" && canMove && !isInserted)  // ハンマーがオブジェクトに触れたかどうか
         {
-            Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");  // 移動前のステップをログに出力
-            if (transform.position.y - currentMoveStep > minY)
+            if (!hasBeenCarved)
             {
-                transform.position -= new Vector3(0, currentMoveStep, 0);  // Y軸に沿って移動
+                Debug.Log("Onta needs to be carved before it can be hammered into place.");
+                return;
+            }
+
+            Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");  // 移動前のステップをログに出力
+
+            if (!CheckOverlap() && transform.position.y - currentMoveStep > minY)
+            {
+                transform.position -= new Vector3(0, currentMoveStep, 0);
                 currentMoveStep *= decreaseFactor;  // 移動ステップを減少
                 Debug.Log($"After moving: currentMoveStep = {currentMoveStep}");  // 移動後のステップをログに出力
 
@@ -47,11 +48,7 @@ public class OntaBehavior : MonoBehaviour
             }
             else
             {
-                transform.position = new Vector3(transform.position.x, minY, transform.position.z);  // Y座標が最小値に達した場合
-<<<<<<< HEAD
-=======
-                isInserted = CheckInsertion();  // 挿入チェック
->>>>>>> parent of b626513 (a)
+                Debug.Log("Onta and Menta are overlapping. Cannot move.");
             }
         }
     }
@@ -60,9 +57,6 @@ public class OntaBehavior : MonoBehaviour
     {
         canMove = true;  // 移動フラグをリセット
     }
-<<<<<<< HEAD
-}
-=======
 
     // 面を削る処理を追加
     public void CarveFace(float carvingDepth)
@@ -70,6 +64,7 @@ public class OntaBehavior : MonoBehaviour
         carvingCount++;  // 削り回数をカウント
         initialMoveStep += carvingImpact;  // 削りの影響量に応じて初期移動距離を増加
         decreaseFactor *= carvingDecreaseFactor;  // 削るほど減少係数も調整
+        hasBeenCarved = true;  // 削る処理が行われたことを示すフラグを設定
 
         // currentMoveStep を更新
         currentMoveStep = initialMoveStep;
@@ -81,7 +76,7 @@ public class OntaBehavior : MonoBehaviour
         }
     }
 
-    bool CheckInsertion()
+    bool CheckOverlap()
     {
         // Mentaの位置とサイズを取得
         Collider mentaCollider = GameObject.FindWithTag("Menta").GetComponent<Collider>();
@@ -91,8 +86,7 @@ public class OntaBehavior : MonoBehaviour
         Collider ontaCollider = GetComponent<Collider>();
         Bounds ontaBounds = ontaCollider.bounds;
 
-        // Ontaの底面がMentaの上面に収まっているかチェック
-        return ontaBounds.min.y <= mentaBounds.max.y;
+        // OntaとMentaのBoundsが重なっているかチェック
+        return ontaBounds.Intersects(mentaBounds);
     }
 }
->>>>>>> parent of b626513 (a)
