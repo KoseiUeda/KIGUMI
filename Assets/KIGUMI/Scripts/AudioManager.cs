@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioClip[] carvingSounds; // 異なる音声クリップの配列
+    public AudioClip strikeSound; // 再生する音声クリップ
     private AudioSource audioSource; // AudioSourceの参照
 
     void Start()
@@ -11,12 +11,11 @@ public class AudioManager : MonoBehaviour
         audioSource.volume = 0.4f; // 音量を0.7に設定
     }
 
-    public void PlayCarvingSound(int carvingCount)
+    public void PlayStrikeSound()
     {
-        int index = Mathf.Clamp(carvingCount, 0, carvingSounds.Length - 1);
-        if (carvingSounds[index] != null && audioSource != null)
+        if (strikeSound != null && audioSource != null)
         {
-            audioSource.PlayOneShot(carvingSounds[index]);
+            audioSource.PlayOneShot(strikeSound, 0.4f); // 音量0.7で音声クリップを再生
         }
     }
 }

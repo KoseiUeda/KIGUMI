@@ -1781,235 +1781,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &537344741
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 537344750}
-  - component: {fileID: 537344749}
-  - component: {fileID: 537344748}
-  - component: {fileID: 537344747}
-  - component: {fileID: 537344746}
-  - component: {fileID: 537344745}
-  - component: {fileID: 537344744}
-  - component: {fileID: 537344743}
-  - component: {fileID: 537344742}
-  m_Layer: 0
-  m_Name: Onta(True)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &537344742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537344741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fd7b62028a42a94f8da04f56a103b95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialMoveStep: 0.02
-  minY: 1
-  decreaseFactor: 0.69
-  soundManager: {fileID: 1134094787}
-  audioManager: {fileID: 737981428}
-  carvingCount: 0
-  carvingDecreaseFactor: 1
---- !u!114 &537344743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537344741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29345210062965f4791e7fcbc6b57f67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!54 &537344744
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537344741}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 2
---- !u!64 &537344745
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537344741}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1829165781690685683, guid: 88d9a8aae8d00b44b904a2e14d9998aa, type: 3}
---- !u!114 &537344746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537344741}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9e83c59d5919c54a897f79ceaf41be7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  facePairs:
-  - touchIndices: e0030000e2030000e3030000e4030000e5030000e7030000e9030000eb030000ed030000ee030000f0030000f1030000f2030000f3030000f6030000f7030000f8030000f9030000fa030000
-    highlightIndices: 0200000003000000120000001300000014000000150000001c0000001d000000
-    highlightMaterial: {fileID: 2100000, guid: 1ba4dac3034e3e34ea7d6074b4566e46, type: 2}
-    moveX: 0
-    moveY: 0
-    moveZ: 1
-    moveCount: 0
-    carvingCount: 0
-  - touchIndices: e5030000fb030000
-    highlightIndices: 1e0000001f00000020000000210000002200000023000000
-    highlightMaterial: {fileID: 2100000, guid: fb785e66edc14eb4fa8e6e317a848c2b, type: 2}
-    moveX: 0
-    moveY: 1
-    moveZ: 0
-    moveCount: 0
-    carvingCount: 0
-  - touchIndices: f4030000f5030000de030000
-    highlightIndices: 1600000017000000
-    highlightMaterial: {fileID: 2100000, guid: 98ca26aeee9750849beaaa69c6876963, type: 2}
-    moveX: 1
-    moveY: 0
-    moveZ: 0
-    moveCount: 0
-    carvingCount: 0
-  - touchIndices: df030000e1030000
-    highlightIndices: 1800000019000000
-    highlightMaterial: {fileID: 2100000, guid: 98ca26aeee9750849beaaa69c6876963, type: 2}
-    moveX: 1
-    moveY: 0
-    moveZ: 0
-    moveCount: 0
-    carvingCount: 0
-  highlightOffset: 0.001
-  moveDistance: 0.001
---- !u!114 &537344747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537344741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaacb78cad6789f4680317dcfa510a73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vertexPrefab: {fileID: 513473694}
---- !u!23 &537344748
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537344741}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 21c01bee78ff1234185a65e968de6b30, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &537344749
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537344741}
-  m_Mesh: {fileID: -1829165781690685683, guid: 88d9a8aae8d00b44b904a2e14d9998aa, type: 3}
---- !u!4 &537344750
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 537344741}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 4, y: 1.0637, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &714699668
 GameObject:
   m_ObjectHideFlags: 0
@@ -2167,8 +1938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162a09e282d4f2d428db05c8a4c6e720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carvingSounds:
-  - {fileID: 8300000, guid: f6a1b9684d96a7f44b2a61b5b34eb604, type: 3}
+  strikeSound: {fileID: 8300000, guid: f6a1b9684d96a7f44b2a61b5b34eb604, type: 3}
 --- !u!4 &737981430
 Transform:
   m_ObjectHideFlags: 0
@@ -3026,24 +2796,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioDataList:
   - minStep: 0
-    maxStep: 0.0003
-    source: {fileID: 1388997127}
-  - minStep: 0.0003
-    maxStep: 0.004
-    source: {fileID: 2146634810}
-  - minStep: 0.004
-    maxStep: 0.007
+    maxStep: 0.0008
     source: {fileID: 1911289049}
-  - minStep: 0.007
-    maxStep: 0.008
+  - minStep: 0.0008
+    maxStep: 0.001
+    source: {fileID: 2146634810}
+  - minStep: 0.001
+    maxStep: 0.003
     source: {fileID: 1023501420}
-  - minStep: 0.008
-    maxStep: 0.01
+  - minStep: 0.003
+    maxStep: 0.005
     source: {fileID: 1008380815}
-  - minStep: 0.01
-    maxStep: 0.015
+  - minStep: 0.005
+    maxStep: 0.009
     source: {fileID: 318352791}
-  - minStep: 0.015
+  - minStep: 0.009
+    maxStep: 0.02
+    source: {fileID: 1963778368}
+  - minStep: 0.009
     maxStep: 0.02
     source: {fileID: 1963778368}
 --- !u!1 &1137542477
@@ -6926,7 +6696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &494993126446116075
 Transform:
   m_ObjectHideFlags: 0
@@ -7694,7 +7464,6 @@ MonoBehaviour:
     moveY: 0
     moveZ: 1
     moveCount: 0
-    carvingCount: 0
   - touchIndices: e5030000fb030000
     highlightIndices: 1e0000001f00000020000000210000002200000023000000
     highlightMaterial: {fileID: 2100000, guid: fb785e66edc14eb4fa8e6e317a848c2b, type: 2}
@@ -7702,7 +7471,6 @@ MonoBehaviour:
     moveY: 1
     moveZ: 0
     moveCount: 0
-    carvingCount: 0
   - touchIndices: f4030000f5030000de030000
     highlightIndices: 1600000017000000
     highlightMaterial: {fileID: 2100000, guid: 98ca26aeee9750849beaaa69c6876963, type: 2}
@@ -7710,7 +7478,6 @@ MonoBehaviour:
     moveY: 0
     moveZ: 0
     moveCount: 0
-    carvingCount: 0
   - touchIndices: df030000e1030000
     highlightIndices: 1800000019000000
     highlightMaterial: {fileID: 2100000, guid: 98ca26aeee9750849beaaa69c6876963, type: 2}
@@ -7718,7 +7485,6 @@ MonoBehaviour:
     moveY: 0
     moveZ: 0
     moveCount: 0
-    carvingCount: 0
   highlightOffset: 0.001
   moveDistance: 0.001
 --- !u!114 &3469287837375605282
@@ -7737,9 +7503,6 @@ MonoBehaviour:
   minY: 1
   decreaseFactor: 0.69
   soundManager: {fileID: 1134094787}
-  audioManager: {fileID: 737981428}
-  carvingCount: 0
-  carvingDecreaseFactor: 1
 --- !u!1 &3507947908643959893
 GameObject:
   m_ObjectHideFlags: 0
@@ -8677,10 +8440,9 @@ GameObject:
   - component: {fileID: 4704913588577656825}
   - component: {fileID: 2358644475188197581}
   - component: {fileID: 9155353813627541427}
-  - component: {fileID: 9155353813627541428}
   m_Layer: 0
   m_Name: Shitaki.001
-  m_TagString: Menta
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9291,7 +9053,6 @@ MonoBehaviour:
     moveY: 0
     moveZ: 1
     moveCount: 0
-    carvingCount: 0
   - touchIndices: e5030000fb030000
     highlightIndices: 1e0000001f00000020000000210000002200000023000000
     highlightMaterial: {fileID: 2100000, guid: fb785e66edc14eb4fa8e6e317a848c2b, type: 2}
@@ -9299,7 +9060,6 @@ MonoBehaviour:
     moveY: 1
     moveZ: 0
     moveCount: 0
-    carvingCount: 0
   - touchIndices: f4030000f5030000de030000
     highlightIndices: 1600000017000000
     highlightMaterial: {fileID: 2100000, guid: 98ca26aeee9750849beaaa69c6876963, type: 2}
@@ -9307,7 +9067,6 @@ MonoBehaviour:
     moveY: 0
     moveZ: 0
     moveCount: 0
-    carvingCount: 0
   - touchIndices: df030000e1030000
     highlightIndices: 1800000019000000
     highlightMaterial: {fileID: 2100000, guid: 98ca26aeee9750849beaaa69c6876963, type: 2}
@@ -9315,7 +9074,6 @@ MonoBehaviour:
     moveY: 0
     moveZ: 0
     moveCount: 0
-    carvingCount: 0
   highlightOffset: 0.001
   moveDistance: 0.0001
 --- !u!114 &8882420071102674450
@@ -9465,28 +9223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea74307b631999945a64cb8b92ffdd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!64 &9155353813627541428
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7230135614429868964}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6834220456412476021, guid: d2d15b35f66ddd446b4e87fdbc70d5ef, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -9496,5 +9232,4 @@ SceneRoots:
   - {fileID: 2047062545}
   - {fileID: 1691905391}
   - {fileID: 543450653525288382}
-  - {fileID: 537344750}
   - {fileID: 3403239263665464540}

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.XR;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ public class FacePair
     public bool moveY = false; // Y方向に移動するかどうかのチェックボックス
     public bool moveZ = false; // Z方向に移動するかどうかのチェックボックス
     public int moveCount = 0; // 加工回数を記録する
-    public int carvingCount = 0; // 削り回数を記録する
 }
 
 public class FaceHighlight : MonoBehaviour
@@ -27,7 +25,8 @@ public class FaceHighlight : MonoBehaviour
     public float highlightOffset = 0.01f; // ハイライトを少し上に移動するオフセット
     public float moveDistance = 0.1f; // 頂点を移動させる距離
 
-    private OntaBehavior ontaBehavior; // OntaBehaviorの参照
+    private AudioManager audioManager; // AudioManagerの参照
+
     private HashSet<int> activePairHashes = new HashSet<int>(); // アクティブなペアのハッシュを保持
     private int currentPairHash = -1; // 現在ハイライトされているペアのハッシュ
     private List<int> currentTriangleIndices = new List<int>(); // 現在ハイライトされている三角形のインデックス
@@ -39,12 +38,8 @@ public class FaceHighlight : MonoBehaviour
         meshFilter = GetComponent<MeshFilter>();
         meshCollider = GetComponent<MeshCollider>();
         displayVertices = GetComponent<DisplayVertices>(); // DisplayVerticesスクリプトの取得
-        ontaBehavior = GetComponent<OntaBehavior>(); // OntaBehaviorスクリプトの取得
 
-        if (ontaBehavior == null)
-        {
-            Debug.LogError("OntaBehavior component not found on the same GameObject.");
-        }
+        audioManager = FindObjectOfType<AudioManager>(); // AudioManagerを探して参照を取得
 
         // 初期ハイライトオブジェクトをペアごとに作成してディクショナリに追加
         foreach (var pair in facePairs)
@@ -90,27 +85,23 @@ public class FaceHighlight : MonoBehaviour
             MoveVerticesAndAdjacentFaces(currentTriangleIndices, moveDirection);
             UpdateColliderMesh(); // コライダーメッシュを更新
 
-            // FacePair の moveCount と carvingCount を更新
+            // FacePair の moveCount を更新
             var pair = facePairs.Find(p => p.GetHashCode() == currentPairHash);
             if (pair != null)
             {
                 pair.moveCount++;
-                pair.carvingCount++;
                 Debug.Log($"Moved vertices of pair with hash {currentPairHash} by {moveDirection}");
 
-                // 面の削る処理を呼び出し、削る深さを指定
-                if (ontaBehavior != null)
+                // AudioManagerを通じて音を再生
+                if (audioManager != null)
                 {
-                    float carvingDepth = 0.005f; // 例として0.005の深さで削る
-                    ontaBehavior.CarveFace(carvingDepth);
+                    audioManager.PlayStrikeSound();
                 }
             }
         }
 
         wasTriggerPressed = triggerPressed; // 現在のトリガーボタンの状態を保存
     }
-
-    // 省略
 
     void OnTriggerEnter(Collider other)
     {

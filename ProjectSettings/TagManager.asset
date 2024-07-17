@@ -9,7 +9,6 @@ TagManager:
   - HighlightObject
   - Onta
   - Hammer
-  - Menta
   layers:
   - Default
   - TransparentFX
