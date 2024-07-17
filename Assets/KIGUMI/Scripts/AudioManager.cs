@@ -2,29 +2,22 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioClip strikeSound; // 再生する音声クリップ
-    public AudioClip[] carvingSounds; // 削る音の配列
+    public AudioClip[] carvingSounds; // 異なる音声クリップの配列
     private AudioSource audioSource; // AudioSourceの参照
+    public float carvingSoundVolume = 0.4f; // 削る音の音量 (0.0 - 1.0)
 
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>(); // AudioSourceコンポーネントを追加
-    }
-
-    public void PlayStrikeSound()
-    {
-        if (strikeSound != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(strikeSound);
-        }
+        audioSource.volume = carvingSoundVolume; // 音量を設定
     }
 
     public void PlayCarvingSound(int carvingCount)
     {
-        if (carvingSounds != null && carvingSounds.Length > 0 && audioSource != null)
+        int index = Mathf.Clamp(carvingCount, 0, carvingSounds.Length - 1);
+        if (carvingSounds[index] != null && audioSource != null)
         {
-            int index = Mathf.Min(carvingCount, carvingSounds.Length - 1);
-            audioSource.PlayOneShot(carvingSounds[index]);
+            audioSource.PlayOneShot(carvingSounds[index], carvingSoundVolume); // 音量を指定して再生
         }
     }
 }
