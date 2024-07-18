@@ -39,6 +39,9 @@ public class OntaBehavior : MonoBehaviour
             else
             {
                 transform.position = new Vector3(transform.position.x, minY, transform.position.z);  // Y座標が最小値に達した場合
+
+                soundManager.PlaySound(currentMoveStep);  // SoundManagerを通じて最後の音を再生
+
                 isInserted = CheckInsertion();  // 挿入チェック
             }
         }
