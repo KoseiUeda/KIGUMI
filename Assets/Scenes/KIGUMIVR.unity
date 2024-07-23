@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.34884906, g: 0.40138483, b: 0.4995141, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2232,7 +2232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &836802557
 Light:
   m_ObjectHideFlags: 0
@@ -2245,7 +2245,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.62
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2501,6 +2501,7 @@ MonoBehaviour:
   audioManager: {fileID: 737981428}
   carvingCount: 0
   carvingDecreaseFactor: 0.98
+  menta: {fileID: 0}
 --- !u!114 &954429777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3196,7 +3197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1217319478
 Transform:
   m_ObjectHideFlags: 0
@@ -3553,7 +3554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &1347722426
 Light:
   m_ObjectHideFlags: 0
@@ -4125,7 +4126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1431250598
 Transform:
   m_ObjectHideFlags: 0
@@ -5912,7 +5913,7 @@ Transform:
   m_GameObject: {fileID: 1904088389}
   serializedVersion: 2
   m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: -0.222, z: 0}
+  m_LocalPosition: {x: 0, y: -0.378, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7224,7 +7225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &2100330169220636430
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7735,6 +7736,7 @@ MonoBehaviour:
   audioManager: {fileID: 737981428}
   carvingCount: 0
   carvingDecreaseFactor: 0.98
+  menta: {fileID: 7230135614429868964}
 --- !u!1 &3507947908643959893
 GameObject:
   m_ObjectHideFlags: 0
@@ -8675,7 +8677,7 @@ GameObject:
   - component: {fileID: 9155353813627541427}
   - component: {fileID: 9155353813627541428}
   m_Layer: 0
-  m_Name: Menta
+  m_Name: Menta(0.3mm)
   m_TagString: Menta
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

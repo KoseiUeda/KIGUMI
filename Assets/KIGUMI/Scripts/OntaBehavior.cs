@@ -21,24 +21,6 @@ public class OntaBehavior : MonoBehaviour
     {
         currentMoveStep = initialMoveStep;  // Start時に初期移動ステップを設定
         initialY = transform.position.y;    // 初期Y座標を設定
-
-        // Rigidbodyの設定
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb == null)
-        {
-            rb = gameObject.AddComponent<Rigidbody>();
-        }
-        rb.useGravity = false;
-        rb.isKinematic = true;
-
-        // MeshColliderの設定
-        MeshCollider meshCollider = GetComponent<MeshCollider>();
-        if (meshCollider == null)
-        {
-            meshCollider = gameObject.AddComponent<MeshCollider>();
-        }
-        meshCollider.convex = false;  // Convexをオフ
-        meshCollider.isTrigger = false;  // Is Triggerをオフ
     }
 
     void OnTriggerEnter(Collider other)
@@ -46,7 +28,7 @@ public class OntaBehavior : MonoBehaviour
         if (other.gameObject.tag == "Hammer" && canMove && !isInserted)  // ハンマーがオブジェクトに触れたかどうか
         {
             Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");  // 移動前のステップをログに出力
-            if (transform.position.y - currentMoveStep > minY && CheckFit())
+            if (transform.position.y - currentMoveStep > minY)
             {
                 transform.position -= new Vector3(0, currentMoveStep, 0);
                 currentMoveStep *= decreaseFactor;  // 移動ステップを減少
@@ -88,22 +70,6 @@ public class OntaBehavior : MonoBehaviour
         {
             audioManager.PlayCarvingSound(carvingCount);
         }
-    }
-
-    bool CheckFit()
-    {
-        // Mentaの位置とサイズを取得
-        Collider mentaCollider = menta.GetComponent<Collider>();
-        Bounds mentaBounds = mentaCollider.bounds;
-
-        // Ontaの位置とサイズを取得
-        Collider ontaCollider = GetComponent<Collider>();
-        Bounds ontaBounds = ontaCollider.bounds;
-
-        // Ontaの底面がMentaの上面に完全に収まっているかチェック
-        return ontaBounds.min.x >= mentaBounds.min.x && ontaBounds.max.x <= mentaBounds.max.x &&
-               ontaBounds.min.z >= mentaBounds.min.z && ontaBounds.max.z <= mentaBounds.max.z &&
-               ontaBounds.min.y > mentaBounds.max.y;
     }
 
     bool CheckInsertion()
