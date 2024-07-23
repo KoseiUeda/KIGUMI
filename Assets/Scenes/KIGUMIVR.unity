@@ -1940,7 +1940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carvingSounds:
   - {fileID: 8300000, guid: f6a1b9684d96a7f44b2a61b5b34eb604, type: 3}
-  carvingSoundVolume: 0.3
+  carvingSoundVolume: 0.5
 --- !u!4 &737981430
 Transform:
   m_ObjectHideFlags: 0
@@ -6972,7 +6972,7 @@ Transform:
   m_GameObject: {fileID: 919132149337325316}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.06369996, z: 0}
+  m_LocalPosition: {x: 0, y: 0.065, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7027,6 +7027,7 @@ GameObject:
   - component: {fileID: 3469287837375605279}
   - component: {fileID: 3469287837375605278}
   - component: {fileID: 3469287837375605282}
+  - component: {fileID: 3469287837375605283}
   m_Layer: 0
   m_Name: Onta(0.3mm)
   m_TagString: Untagged
@@ -7646,7 +7647,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!64 &3469287837375605280
 MeshCollider:
@@ -7724,9 +7725,29 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149337325316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fd7b62028a42a94f8da04f56a103b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialMoveStep: 0.02
+  minY: 1
+  decreaseFactor: 0.69
+  soundManager: {fileID: 1134094787}
+  audioManager: {fileID: 737981428}
+  carvingCount: 0
+  carvingDecreaseFactor: 1
+  menta: {fileID: 7230135614429868964}
+--- !u!114 &3469287837375605283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149337325316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9249dcc43076d514d888be7f57738d81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   initialMoveStep: 0.02
