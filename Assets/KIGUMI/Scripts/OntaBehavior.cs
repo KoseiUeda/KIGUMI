@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class OntaBehavior : MonoBehaviour
 {
+<<<<<<< Updated upstream
     public float initialMoveStep = 0.02f;  // åˆæœŸç§»å‹•ã‚¹ãƒ†ãƒƒãƒ—
     public float minY = 1.0f;              // æœ€å°Yåº§æ¨™ï¼ˆç§»å‹•åœæ­¢ä½ç½®ï¼‰
     public float decreaseFactor = 0.94f;   // ç§»å‹•ã‚¹ãƒ†ãƒƒãƒ—æ¸›å°‘ä¿‚æ•°
@@ -16,6 +17,21 @@ public class OntaBehavior : MonoBehaviour
     private bool isInserted = false;       // æŒ¿å…¥ãŒå®Œäº†ã—ãŸã‹ã©ã†ã‹ã‚’ç¤ºã™ãƒ•ãƒ©ã‚°
     public GameObject menta;               // Mentaã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®å‚ç…§
     private float initialY;                // åˆæœŸYåº§æ¨™ã‚’ä¿æŒã™ã‚‹å¤‰æ•°
+=======
+    public float initialMoveStep = 0.02f;  // ‰ŠúˆÚ“®ƒXƒeƒbƒv
+    public float minY = 1.0f;              // Å¬YÀ•WiˆÚ“®’â~ˆÊ’uj
+    public float decreaseFactor = 0.94f;   // ˆÚ“®ƒXƒeƒbƒvŒ¸­ŒW”
+    private float currentMoveStep;         // Œ»İ‚ÌˆÚ“®ƒXƒeƒbƒv
+    private bool canMove = true;           // ˆÚ“®‰Â”\ƒtƒ‰ƒO
+    private float cooldown = 0.5f;         // —â‹pŠÔ
+    public SoundManager soundManager;      // SoundManager‚Ö‚ÌQÆ
+    public AudioManager audioManager;      // AudioManager‚Ö‚ÌQÆ
+    public int carvingCount = 0;           // í‚è‰ñ”‚ğƒJƒEƒ“ƒg
+    public float carvingDecreaseFactor = 0.98f; // í‚è‚É‚æ‚éŒ¸­ŒW”‚Ì•Ï‰»
+    private float carvingImpact = 0.002f;  // í‚è‚Ì‰e‹¿—Ê
+    private bool isInserted = false;       // ‘}“ü‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ¦‚·ƒtƒ‰ƒO
+    public GameObject menta;               // MentaƒIƒuƒWƒFƒNƒg‚Ö‚ÌQÆ
+>>>>>>> Stashed changes
 
     void Start()
     {
@@ -27,8 +43,13 @@ public class OntaBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Hammer" && canMove && !isInserted)  // ãƒãƒ³ãƒãƒ¼ãŒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«è§¦ã‚ŒãŸã‹ã©ã†ã‹
         {
+<<<<<<< Updated upstream
             Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");  // ç§»å‹•å‰ã®ã‚¹ãƒ†ãƒƒãƒ—ã‚’ãƒ­ã‚°ã«å‡ºåŠ›
             if (transform.position.y - currentMoveStep > minY)
+=======
+            Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");  // ˆÚ“®‘O‚ÌƒXƒeƒbƒv‚ğƒƒO‚Éo—Í
+            if (transform.position.y - currentMoveStep > minY && CheckFit())
+>>>>>>> Stashed changes
             {
                 transform.position -= new Vector3(0, currentMoveStep, 0);
                 currentMoveStep *= decreaseFactor;  // ç§»å‹•ã‚¹ãƒ†ãƒƒãƒ—ã‚’æ¸›å°‘
@@ -72,9 +93,28 @@ public class OntaBehavior : MonoBehaviour
         }
     }
 
+    bool CheckFit()
+    {
+        // Menta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+        Collider mentaCollider = menta.GetComponent<Collider>();
+        Bounds mentaBounds = mentaCollider.bounds;
+
+        // Onta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+        Collider ontaCollider = GetComponent<Collider>();
+        Bounds ontaBounds = ontaCollider.bounds;
+
+        // Onta‚Ì’ê–Ê‚ªMenta‚Ìã–Ê‚ÉŠ®‘S‚Éû‚Ü‚Á‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+        return ontaBounds.min.x >= mentaBounds.min.x && ontaBounds.max.x <= mentaBounds.max.x &&
+               ontaBounds.min.z >= mentaBounds.min.z && ontaBounds.max.z <= mentaBounds.max.z;
+    }
+
     bool CheckInsertion()
     {
+<<<<<<< Updated upstream
         // Mentaã®ä½ç½®ã¨ã‚µã‚¤ã‚ºã‚’å–å¾—
+=======
+        // Menta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+>>>>>>> Stashed changes
         Collider mentaCollider = menta.GetComponent<Collider>();
         Bounds mentaBounds = mentaCollider.bounds;
 
