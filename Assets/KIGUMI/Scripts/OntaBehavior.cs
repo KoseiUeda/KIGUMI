@@ -3,6 +3,11 @@ using UnityEngine;
 public class OntaBehavior : MonoBehaviour
 {
 <<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
     public float initialMoveStep = 0.02f;  // åˆæœŸç§»å‹•ã‚¹ãƒ†ãƒƒãƒ—
     public float minY = 1.0f;              // æœ€å°Yåº§æ¨™ï¼ˆç§»å‹•åœæ­¢ä½ç½®ï¼‰
     public float decreaseFactor = 0.94f;   // ç§»å‹•ã‚¹ãƒ†ãƒƒãƒ—æ¸›å°‘ä¿‚æ•°
@@ -18,6 +23,10 @@ public class OntaBehavior : MonoBehaviour
     public GameObject menta;               // Mentaã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®å‚ç…§
     private float initialY;                // åˆæœŸYåº§æ¨™ã‚’ä¿æŒã™ã‚‹å¤‰æ•°
 =======
+<<<<<<< Updated upstream
+=======
+>>>>>>> 4b46801ccc9551eb9393165074f2278c670820d2
+>>>>>>> Stashed changes
     public float initialMoveStep = 0.02f;  // ‰ŠúˆÚ“®ƒXƒeƒbƒv
     public float minY = 1.0f;              // Å¬YÀ•WiˆÚ“®’â~ˆÊ’uj
     public float decreaseFactor = 0.94f;   // ˆÚ“®ƒXƒeƒbƒvŒ¸­ŒW”
@@ -31,18 +40,33 @@ public class OntaBehavior : MonoBehaviour
     private float carvingImpact = 0.002f;  // í‚è‚Ì‰e‹¿—Ê
     private bool isInserted = false;       // ‘}“ü‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ¦‚·ƒtƒ‰ƒO
     public GameObject menta;               // MentaƒIƒuƒWƒFƒNƒg‚Ö‚ÌQÆ
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+<<<<<<< HEAD
+    private float initialY;                // ‰ŠúYÀ•W‚ğ•Û‚·‚é•Ï”
+=======
+>>>>>>> Stashed changes
+>>>>>>> 4b46801ccc9551eb9393165074f2278c670820d2
 >>>>>>> Stashed changes
 
     void Start()
     {
-        currentMoveStep = initialMoveStep;  // Startæ™‚ã«åˆæœŸç§»å‹•ã‚¹ãƒ†ãƒƒãƒ—ã‚’è¨­å®š
-        initialY = transform.position.y;    // åˆæœŸYåº§æ¨™ã‚’è¨­å®š
+        currentMoveStep = initialMoveStep;  // Start‚É‰ŠúˆÚ“®ƒXƒeƒbƒv‚ğİ’è
+        initialY = transform.position.y;    // ‰ŠúYÀ•W‚ğİ’è
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hammer" && canMove && !isInserted)  // ãƒãƒ³ãƒãƒ¼ãŒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«è§¦ã‚ŒãŸã‹ã©ã†ã‹
+        if (other.gameObject.tag == "Hammer" && canMove && !isInserted)  // ƒnƒ“ƒ}[‚ªƒIƒuƒWƒFƒNƒg‚ÉG‚ê‚½‚©‚Ç‚¤‚©
         {
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+            Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");  // ˆÚ“®‘O‚ÌƒXƒeƒbƒv‚ğƒƒO‚Éo—Í
+            if (transform.position.y - currentMoveStep > minY && CheckFit())
+=======
+>>>>>>> Stashed changes
 <<<<<<< Updated upstream
             Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");  // ç§»å‹•å‰ã®ã‚¹ãƒ†ãƒƒãƒ—ã‚’ãƒ­ã‚°ã«å‡ºåŠ›
             if (transform.position.y - currentMoveStep > minY)
@@ -50,43 +74,47 @@ public class OntaBehavior : MonoBehaviour
             Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");  // ˆÚ“®‘O‚ÌƒXƒeƒbƒv‚ğƒƒO‚Éo—Í
             if (transform.position.y - currentMoveStep > minY && CheckFit())
 >>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+>>>>>>> 4b46801ccc9551eb9393165074f2278c670820d2
+>>>>>>> Stashed changes
             {
                 transform.position -= new Vector3(0, currentMoveStep, 0);
-                currentMoveStep *= decreaseFactor;  // ç§»å‹•ã‚¹ãƒ†ãƒƒãƒ—ã‚’æ¸›å°‘
-                Debug.Log($"After moving: currentMoveStep = {currentMoveStep}");  // ç§»å‹•å¾Œã®ã‚¹ãƒ†ãƒƒãƒ—ã‚’ãƒ­ã‚°ã«å‡ºåŠ›
+                currentMoveStep *= decreaseFactor;  // ˆÚ“®ƒXƒeƒbƒv‚ğŒ¸­
+                Debug.Log($"After moving: currentMoveStep = {currentMoveStep}");  // ˆÚ“®Œã‚ÌƒXƒeƒbƒv‚ğƒƒO‚Éo—Í
 
-                soundManager.PlaySound(currentMoveStep);  // SoundManagerã‚’é€šã˜ã¦éŸ³ã‚’å†ç”Ÿ
+                soundManager.PlaySound(currentMoveStep);  // SoundManager‚ğ’Ê‚¶‚Ä‰¹‚ğÄ¶
 
-                canMove = false;  // ç§»å‹•ãƒ•ãƒ©ã‚°ã‚’falseã«è¨­å®š
-                Invoke("ResetMovement", cooldown);  // å†·å´æ™‚é–“å¾Œã«ç§»å‹•ãƒ•ãƒ©ã‚°ã‚’ãƒªã‚»ãƒƒãƒˆ
+                canMove = false;  // ˆÚ“®ƒtƒ‰ƒO‚ğfalse‚Éİ’è
+                Invoke("ResetMovement", cooldown);  // —â‹pŠÔŒã‚ÉˆÚ“®ƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
             }
             else
             {
-                transform.position = new Vector3(transform.position.x, minY, transform.position.z);  // Yåº§æ¨™ãŒæœ€å°å€¤ã«é”ã—ãŸå ´åˆ
+                transform.position = new Vector3(transform.position.x, minY, transform.position.z);  // YÀ•W‚ªÅ¬’l‚É’B‚µ‚½ê‡
 
-                soundManager.PlaySound(currentMoveStep);  // SoundManagerã‚’é€šã˜ã¦æœ€å¾Œã®éŸ³ã‚’å†ç”Ÿ
+                soundManager.PlaySound(currentMoveStep);  // SoundManager‚ğ’Ê‚¶‚ÄÅŒã‚Ì‰¹‚ğÄ¶
 
-                isInserted = CheckInsertion();  // æŒ¿å…¥ãƒã‚§ãƒƒã‚¯
+                isInserted = CheckInsertion();  // ‘}“üƒ`ƒFƒbƒN
             }
         }
     }
 
     void ResetMovement()
     {
-        canMove = true;  // ç§»å‹•ãƒ•ãƒ©ã‚°ã‚’ãƒªã‚»ãƒƒãƒˆ
+        canMove = true;  // ˆÚ“®ƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
     }
 
-    // é¢ã‚’å‰Šã‚‹å‡¦ç†ã‚’è¿½åŠ 
+    // –Ê‚ğí‚éˆ—‚ğ’Ç‰Á
     public void CarveFace(float carvingDepth)
     {
-        carvingCount++;  // å‰Šã‚Šå›æ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆ
-        initialMoveStep += carvingImpact;  // å‰Šã‚Šã®å½±éŸ¿é‡ã«å¿œã˜ã¦åˆæœŸç§»å‹•è·é›¢ã‚’å¢—åŠ 
-        decreaseFactor *= carvingDecreaseFactor;  // å‰Šã‚‹ã»ã©æ¸›å°‘ä¿‚æ•°ã‚‚èª¿æ•´
+        carvingCount++;  // í‚è‰ñ”‚ğƒJƒEƒ“ƒg
+        initialMoveStep += carvingImpact;  // í‚è‚Ì‰e‹¿—Ê‚É‰‚¶‚Ä‰ŠúˆÚ“®‹——£‚ğ‘‰Á
+        decreaseFactor *= carvingDecreaseFactor;  // í‚é‚Ù‚ÇŒ¸­ŒW”‚à’²®
 
-        // currentMoveStep ã‚’æ›´æ–°
+        // currentMoveStep ‚ğXV
         currentMoveStep = initialMoveStep;
 
-        // AudioManagerã‚’ä½¿ã£ã¦å‰Šã‚‹éŸ³ã‚’å†ç”Ÿ
+        // AudioManager‚ğg‚Á‚Äí‚é‰¹‚ğÄ¶
         if (audioManager != null)
         {
             audioManager.PlayCarvingSound(carvingCount);
@@ -94,6 +122,7 @@ public class OntaBehavior : MonoBehaviour
     }
 
     bool CheckFit()
+<<<<<<< Updated upstream
     {
         // Menta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
         Collider mentaCollider = menta.GetComponent<Collider>();
@@ -115,14 +144,69 @@ public class OntaBehavior : MonoBehaviour
 =======
         // Menta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
 >>>>>>> Stashed changes
+=======
+<<<<<<< HEAD
+    {
+        // Menta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+=======
+    {
+        // Menta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+>>>>>>> Stashed changes
         Collider mentaCollider = menta.GetComponent<Collider>();
         Bounds mentaBounds = mentaCollider.bounds;
 
-        // Ontaã®ä½ç½®ã¨ã‚µã‚¤ã‚ºã‚’å–å¾—
+        // Onta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
         Collider ontaCollider = GetComponent<Collider>();
         Bounds ontaBounds = ontaCollider.bounds;
 
-        // Ontaã®åº•é¢ãŒMentaã®ä¸Šé¢ã«åã¾ã£ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
+        // Onta‚Ì’ê–Ê‚ªMenta‚Ìã–Ê‚ÉŠ®‘S‚Éû‚Ü‚Á‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+        return ontaBounds.min.x >= mentaBounds.min.x && ontaBounds.max.x <= mentaBounds.max.x &&
+               ontaBounds.min.z >= mentaBounds.min.z && ontaBounds.max.z <= mentaBounds.max.z;
+    }
+
+    bool CheckInsertion()
+    {
+<<<<<<< Updated upstream
+        // Mentaã®ä½ç½®ã¨ã‚µã‚¤ã‚ºã‚’å–å¾—
+=======
+        // Menta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+>>>>>>> Stashed changes
+>>>>>>> 4b46801ccc9551eb9393165074f2278c670820d2
+        Collider mentaCollider = menta.GetComponent<Collider>();
+        Bounds mentaBounds = mentaCollider.bounds;
+
+        // Onta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+        Collider ontaCollider = GetComponent<Collider>();
+        Bounds ontaBounds = ontaCollider.bounds;
+
+        // Onta‚Ì’ê–Ê‚ªMenta‚Ìã–Ê‚ÉŠ®‘S‚Éû‚Ü‚Á‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+        return ontaBounds.min.x >= mentaBounds.min.x && ontaBounds.max.x <= mentaBounds.max.x &&
+               ontaBounds.min.z >= mentaBounds.min.z && ontaBounds.max.z <= mentaBounds.max.z;
+    }
+
+    bool CheckInsertion()
+    {
+        // Menta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+        Collider mentaCollider = menta.GetComponent<Collider>();
+        Bounds mentaBounds = mentaCollider.bounds;
+
+        // Onta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+        Collider ontaCollider = GetComponent<Collider>();
+        Bounds ontaBounds = ontaCollider.bounds;
+
+        // Onta‚Ì’ê–Ê‚ªMenta‚Ìã–Ê‚Éû‚Ü‚Á‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
         return ontaBounds.min.y <= mentaBounds.max.y;
     }
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+
+    bool CheckExcessHeight()
+    {
+        // Œ»İ‚Ì‚‚³‚Æ‰Šú‚‚³‚Ì·‚ğƒ`ƒFƒbƒN
+        return (initialY - transform.position.y) >= 0.3f;
+    }
+=======
+>>>>>>> 4b46801ccc9551eb9393165074f2278c670820d2
+>>>>>>> Stashed changes
 }
