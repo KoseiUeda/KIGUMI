@@ -3,24 +3,26 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class OntaSnapController : MonoBehaviour
 {
-    // HammeringとChiselingのターゲット位置と回転（ローカル座標系）
-    public Vector3 targetLocalPositionHammering;  // Hammering用のターゲットローカル位置
-    public Vector3 targetLocalRotationHammering;  // Hammering用のターゲットローカル回転
+    public Vector3 targetLocalPositionHammering;
+    public Vector3 targetLocalRotationHammering;
+    public Vector3 targetLocalPositionChiseling;
+    public Vector3 targetLocalRotationChiseling;
 
-    public Vector3 targetLocalPositionChiseling;  // Chiseling用のターゲットローカル位置
-    public Vector3 targetLocalRotationChiseling;  // Chiseling用のターゲットローカル回転
-
-    public float snapRange = 0.5f;  // スナップする範囲
+    public float snapRange = 0.5f;
+    public float snapCooldown = 1.0f;
 
     private XRGrabInteractable grabInteractable;
     private Rigidbody rb;
-    private OntaBehavior ontaBehavior;  // OntaBehaviorの参照
+    private OntaBehavior ontaBehavior;
+    private FaceHighlight faceHighlight;
+    private float lastSnapTime = 0f;
 
     void Start()
     {
         grabInteractable = GetComponent<XRGrabInteractable>();
         rb = GetComponent<Rigidbody>();
-        ontaBehavior = GetComponent<OntaBehavior>();  // OntaBehaviorのコンポーネントを取得
+        ontaBehavior = GetComponent<OntaBehavior>();
+        faceHighlight = GetComponent<FaceHighlight>();
 
         if (grabInteractable == null)
         {
@@ -37,69 +39,93 @@ public class OntaSnapController : MonoBehaviour
             Debug.LogError("OntaBehavior not found on the object.");
         }
 
+        if (faceHighlight == null)
+        {
+            Debug.LogError("FaceHighlight not found on the object.");
+        }
+
         grabInteractable.selectExited.AddListener(OnRelease);
+        grabInteractable.selectEntered.AddListener(OnGrab);
+
+        ontaBehavior.enabled = false;
+        faceHighlight.enabled = false;
+    }
+
+    private void OnGrab(SelectEnterEventArgs args)
+    {
+        ontaBehavior.enabled = false;
+        faceHighlight.enabled = false;
+        Debug.Log("Onta grabbed. Both OntaBehavior and FaceHighlight disabled.");
     }
 
     private void OnRelease(SelectExitEventArgs args)
     {
         Debug.Log("Onta released");
 
-        // HammeringとChiselingの2つのスナップ位置を確認してスナップ
+        if (Time.time - lastSnapTime < snapCooldown)
+        {
+            Debug.Log("Snap cooldown active, skipping snap.");
+            return;
+        }
+
         float distanceToHammering = Vector3.Distance(transform.localPosition, targetLocalPositionHammering);
         float distanceToChiseling = Vector3.Distance(transform.localPosition, targetLocalPositionChiseling);
 
         if (distanceToHammering <= snapRange)
         {
-            SnapToHammering();  // Hammeringの場所にスナップ
+            SnapToHammering();
+            ontaBehavior.ResetOnta(); // Hammering位置にスナップされたらOntaBehaviorをリセット
         }
         else if (distanceToChiseling <= snapRange)
         {
-            SnapToChiseling();  // Chiselingの場所にスナップ
+            SnapToChiseling();
+        }
+        else
+        {
+            DisableAllScripts();
         }
     }
 
     private void SnapToHammering()
     {
+        rb.isKinematic = false;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        // Hammering用のローカル位置と回転にスナップ
         transform.localPosition = targetLocalPositionHammering;
         transform.localRotation = Quaternion.Euler(targetLocalRotationHammering);
 
-        // OntaBehaviorの動きをリセット（CarvingCountはリセットしない）
-        ResetOntaBehavior();
+        rb.isKinematic = true;
 
-        Debug.Log("Onta snapped to Hammering position and OntaBehavior reset.");
+        ontaBehavior.enabled = true;
+        faceHighlight.enabled = false;
+
+        lastSnapTime = Time.time;
+        Debug.Log("Onta snapped to Hammering position. OntaBehavior enabled, FaceHighlight disabled.");
     }
 
     private void SnapToChiseling()
     {
+        rb.isKinematic = false;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        // Chiseling用のローカル位置と回転にスナップ
         transform.localPosition = targetLocalPositionChiseling;
         transform.localRotation = Quaternion.Euler(targetLocalRotationChiseling);
 
-        Debug.Log("Onta snapped to Chiseling position.");
+        rb.isKinematic = true;
+
+        ontaBehavior.enabled = false;
+        faceHighlight.enabled = true;
+
+        lastSnapTime = Time.time;
+        Debug.Log("Onta snapped to Chiseling position. FaceHighlight enabled, OntaBehavior disabled.");
     }
 
-    private void ResetOntaBehavior()
+    private void DisableAllScripts()
     {
-        if (ontaBehavior != null)
-        {
-            // CarvingCountは保持して、その他の動作に関する変数をリセット
-            ontaBehavior.currentMoveStep = ontaBehavior.initialMoveStep;
-            ontaBehavior.isInserted = false;
-            ontaBehavior.canMove = true;
-
-            Debug.Log("OntaBehavior movement reset.");
-        }
-    }
-
-    private void ResetPhysics()
-    {
-        rb.isKinematic = false;
+        ontaBehavior.enabled = false;
+        faceHighlight.enabled = false;
+        Debug.Log("Both OntaBehavior and FaceHighlight disabled.");
     }
 }

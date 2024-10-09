@@ -2,72 +2,72 @@
 
 public class OntaBehavior : MonoBehaviour
 {
-    public float initialMoveStep = 0.02f;  // ‰ŠúˆÚ“®ƒXƒeƒbƒv
-    public float minY = 1.0f;              // Å¬YÀ•WiˆÚ“®’âŽ~ˆÊ’uj
-    public float decreaseFactor = 0.94f;   // ˆÚ“®ƒXƒeƒbƒvŒ¸­ŒW”
-    public float currentMoveStep;         // Œ»Ý‚ÌˆÚ“®ƒXƒeƒbƒv
-    public bool canMove = true;           // ˆÚ“®‰Â”\ƒtƒ‰ƒO
-    private float cooldown = 0.5f;         // —â‹pŽžŠÔ
-    public SoundManager soundManager;      // SoundManager‚Ö‚ÌŽQÆ
-    public AudioManager audioManager;      // AudioManager‚Ö‚ÌŽQÆ
-    public int carvingCount = 0;           // í‚è‰ñ”‚ðƒJƒEƒ“ƒg
-    public float carvingDecreaseFactor = 0.98f; // í‚è‚É‚æ‚éŒ¸­ŒW”‚Ì•Ï‰»
-    private float carvingImpact = 0.002f;  // í‚è‚Ì‰e‹¿—Ê
-    public bool isInserted = false;       // ‘}“ü‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ðŽ¦‚·ƒtƒ‰ƒO
-    public GameObject menta;               // MentaƒIƒuƒWƒFƒNƒg‚Ö‚ÌŽQÆ
-    private float initialY;                // ‰ŠúYÀ•W‚ð•ÛŽ‚·‚é•Ï”
+    public float initialMoveStep = 0.02f; // 初期の移動ステップ
+    public float minY = 1.0f; // ローカル座標での最小Y位置
+    public float decreaseFactor = 0.94f; // 移動ステップの減少係数
+    private float currentMoveStep; // 現在の移動ステップ
+    private bool canMove = true; // 移動可能かどうか
+    private float cooldown = 0.5f; // クールダウン時間
+    public SoundManager soundManager; // サウンドマネージャー
+    public AudioManager audioManager; // オーディオマネージャー
+    public int carvingCount = 0; // 削り回数
+    public float carvingDecreaseFactor = 0.98f; // 削る際の減少係数
+    private float carvingImpact = 0.002f; // 削る際の影響
+    private bool isInserted = false; // 挿入されたかどうか
+    public GameObject menta; // メンタのオブジェクト
+    private float initialY; // 初期のローカルY位置
 
     void Start()
     {
-        currentMoveStep = initialMoveStep;  // StartŽž‚É‰ŠúˆÚ“®ƒXƒeƒbƒv‚ðÝ’è
-        initialY = transform.position.y;    // ‰ŠúYÀ•W‚ðÝ’è
+        currentMoveStep = initialMoveStep; // 移動ステップの初期化
+        initialY = transform.localPosition.y; // 初期のローカルY位置を記録
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hammer" && canMove && !isInserted)
+        if (other.gameObject.tag == "Hammer" && canMove && !isInserted) // ハンマーが接触した場合のみ
         {
-            Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");
+            Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}"); // 移動前のステップを表示
 
-            // ローカル座標のY位置がminYより大きいか確認
             if (transform.localPosition.y - currentMoveStep > minY)
             {
-                // ローカル座標でOntaを下に移動させる
+                // MinYより大きい場合、下がる
                 transform.localPosition -= new Vector3(0, currentMoveStep, 0);
-                currentMoveStep *= decreaseFactor;  // 移動量を減少させる
-                Debug.Log($"After moving: currentMoveStep = {currentMoveStep}");
+                currentMoveStep *= decreaseFactor; // 移動ステップを減少
+                Debug.Log($"After moving: currentMoveStep = {currentMoveStep}"); // 移動後のステップを表示
 
-                soundManager.PlaySound(currentMoveStep);  // サウンド再生
-                canMove = false;  // 一度動いたら次の動作まで待機
-                Invoke("ResetMovement", cooldown);  // クールダウン後に移動をリセット
+                soundManager.PlaySound(currentMoveStep); // サウンドを再生
+
+                canMove = false; // 移動を一時的に無効化
+                Invoke("ResetMovement", cooldown); // クールダウン後に移動をリセット
             }
             else
             {
-                // 最小のY座標に達した場合、ローカル座標でY位置をminYに制限する
+                // MinYに達したら位置を修正し、それ以上下がらないようにする
                 transform.localPosition = new Vector3(transform.localPosition.x, minY, transform.localPosition.z);
-                soundManager.PlaySound(currentMoveStep);  // サウンド再生
-                isInserted = CheckInsertion();  // 挿入状態の確認
+                soundManager.PlaySound(currentMoveStep); // サウンドを再生
+
+                isInserted = CheckInsertion(); // 挿入されているかチェック
             }
         }
     }
 
-
     void ResetMovement()
     {
-        canMove = true;  // ˆÚ“®ƒtƒ‰ƒO‚ðƒŠƒZƒbƒg
+        canMove = true; // 移動を再び有効にする
     }
 
-    // –Ê‚ðí‚éˆ—‚ð’Ç‰Á
+    // 面を削る処理
     public void CarveFace(float carvingDepth)
     {
-        carvingCount++;  // í‚è‰ñ”‚ðƒJƒEƒ“ƒg
-        initialMoveStep += carvingImpact;  // í‚è‚Ì‰e‹¿—Ê‚É‰ž‚¶‚Ä‰ŠúˆÚ“®‹——£‚ð‘‰Á
-        decreaseFactor *= carvingDecreaseFactor;  // í‚é‚Ù‚ÇŒ¸­ŒW”‚à’²®
+        carvingCount++; // 削り回数をカウント
+        initialMoveStep += carvingImpact; // 移動ステップに影響を与える
+        decreaseFactor *= carvingDecreaseFactor; // 減少係数を更新
 
-        // currentMoveStep ‚ðXV
+        // 現在の移動ステップを更新
         currentMoveStep = initialMoveStep;
 
-        // AudioManager‚ðŽg‚Á‚Äí‚é‰¹‚ðÄ¶
+        // 削り音を再生
         if (audioManager != null)
         {
             audioManager.PlayCarvingSound(carvingCount);
@@ -76,15 +76,23 @@ public class OntaBehavior : MonoBehaviour
 
     bool CheckInsertion()
     {
-        // Menta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ðŽæ“¾
+        // Mentaのコライダーとサイズを取得
         Collider mentaCollider = menta.GetComponent<Collider>();
         Bounds mentaBounds = mentaCollider.bounds;
 
-        // Onta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ðŽæ“¾
+        // Ontaのコライダーとサイズを取得
         Collider ontaCollider = GetComponent<Collider>();
         Bounds ontaBounds = ontaCollider.bounds;
 
-        // Onta‚Ì’ê–Ê‚ªMenta‚Ìã–Ê‚ÉŽû‚Ü‚Á‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+        // OntaがMentaの上にあるかをチェック
         return ontaBounds.min.y <= mentaBounds.max.y;
     }
+    public void ResetOnta()
+    {
+        currentMoveStep = initialMoveStep; // 初期の移動ステップにリセット
+        canMove = true; // 移動を再び有効にする
+        isInserted = false; // 挿入された状態をリセット
+        Debug.Log("OntaBehavior has been reset.");
+    }
+
 }
