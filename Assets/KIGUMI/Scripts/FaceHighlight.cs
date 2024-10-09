@@ -112,7 +112,7 @@ public class FaceHighlight : MonoBehaviour
     // 省略された他のメソッド...
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("HighlightObject")) // 任意のオブジェクトにタグを設定して検出
+        if (other.CompareTag("Chisel")) // 任意のオブジェクトにタグを設定して検出
         {
             MeshFilter otherMeshFilter = other.GetComponent<MeshFilter>();
             if (otherMeshFilter != null)
@@ -148,7 +148,7 @@ public class FaceHighlight : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("HighlightObject"))
+        if (other.CompareTag("Chisel"))
         {
             ResetHighlight();
             activePairHashes.Clear(); // アクティブなペアのハッシュをクリア

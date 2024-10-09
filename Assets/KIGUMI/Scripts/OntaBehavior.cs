@@ -1,71 +1,73 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class OntaBehavior : MonoBehaviour
 {
-    public float initialMoveStep = 0.02f;  // ‰ŠúˆÚ“®ƒXƒeƒbƒv
-    public float minY = 1.0f;              // Å¬YÀ•WiˆÚ“®’â~ˆÊ’uj
-    public float decreaseFactor = 0.94f;   // ˆÚ“®ƒXƒeƒbƒvŒ¸­ŒW”
-    private float currentMoveStep;         // Œ»İ‚ÌˆÚ“®ƒXƒeƒbƒv
-    private bool canMove = true;           // ˆÚ“®‰Â”\ƒtƒ‰ƒO
-    private float cooldown = 0.5f;         // —â‹pŠÔ
-    public SoundManager soundManager;      // SoundManager‚Ö‚ÌQÆ
-    public AudioManager audioManager;      // AudioManager‚Ö‚ÌQÆ
-    public int carvingCount = 0;           // í‚è‰ñ”‚ğƒJƒEƒ“ƒg
-    public float carvingDecreaseFactor = 0.98f; // í‚è‚É‚æ‚éŒ¸­ŒW”‚Ì•Ï‰»
-    private float carvingImpact = 0.002f;  // í‚è‚Ì‰e‹¿—Ê
-    private bool isInserted = false;       // ‘}“ü‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ğ¦‚·ƒtƒ‰ƒO
-    public GameObject menta;               // MentaƒIƒuƒWƒFƒNƒg‚Ö‚ÌQÆ
-    private float initialY;                // ‰ŠúYÀ•W‚ğ•Û‚·‚é•Ï”
+    public float initialMoveStep = 0.02f;  // Ââ€°Å ÃºË†Ãšâ€œÂ®Æ’XÆ’eÆ’bÆ’v
+    public float minY = 1.0f;              // ÂÃ…ÂÂ¬YÂÃ€â€¢WÂiË†Ãšâ€œÂ®â€™Ã¢Å½~Ë†ÃŠâ€™uÂj
+    public float decreaseFactor = 0.94f;   // Ë†Ãšâ€œÂ®Æ’XÆ’eÆ’bÆ’vÅ’Â¸ÂÂ­Å’WÂâ€
+    public float currentMoveStep;         // Å’Â»ÂÃâ€šÃŒË†Ãšâ€œÂ®Æ’XÆ’eÆ’bÆ’v
+    public bool canMove = true;           // Ë†Ãšâ€œÂ®â€°Ã‚â€\Æ’tÆ’â€°Æ’O
+    private float cooldown = 0.5f;         // â€”Ã¢â€¹pÅ½Å¾Å Ã”
+    public SoundManager soundManager;      // SoundManagerâ€šÃ–â€šÃŒÅ½QÂÃ†
+    public AudioManager audioManager;      // AudioManagerâ€šÃ–â€šÃŒÅ½QÂÃ†
+    public int carvingCount = 0;           // ÂÃ­â€šÃ¨â€°Ã±Ââ€â€šÃ°Æ’JÆ’EÆ’â€œÆ’g
+    public float carvingDecreaseFactor = 0.98f; // ÂÃ­â€šÃ¨â€šÃ‰â€šÃ¦â€šÃ©Å’Â¸ÂÂ­Å’WÂâ€â€šÃŒâ€¢Ãâ€°Â»
+    private float carvingImpact = 0.002f;  // ÂÃ­â€šÃ¨â€šÃŒâ€°eâ€¹Â¿â€”ÃŠ
+    public bool isInserted = false;       // â€˜}â€œÃ¼â€šÂªÅ Â®â€”Â¹â€šÂµâ€šÂ½â€šÂ©â€šÃ‡â€šÂ¤â€šÂ©â€šÃ°Å½Â¦â€šÂ·Æ’tÆ’â€°Æ’O
+    public GameObject menta;               // MentaÆ’IÆ’uÆ’WÆ’FÆ’NÆ’gâ€šÃ–â€šÃŒÅ½QÂÃ†
+    private float initialY;                // Ââ€°Å ÃºYÂÃ€â€¢Wâ€šÃ°â€¢Ã›Å½Ââ€šÂ·â€šÃ©â€¢ÃÂâ€
 
     void Start()
     {
-        currentMoveStep = initialMoveStep;  // Start‚É‰ŠúˆÚ“®ƒXƒeƒbƒv‚ğİ’è
-        initialY = transform.position.y;    // ‰ŠúYÀ•W‚ğİ’è
+        currentMoveStep = initialMoveStep;  // StartÅ½Å¾â€šÃ‰Ââ€°Å ÃºË†Ãšâ€œÂ®Æ’XÆ’eÆ’bÆ’vâ€šÃ°ÂÃâ€™Ã¨
+        initialY = transform.position.y;    // Ââ€°Å ÃºYÂÃ€â€¢Wâ€šÃ°ÂÃâ€™Ã¨
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hammer" && canMove && !isInserted)  // ƒnƒ“ƒ}[‚ªƒIƒuƒWƒFƒNƒg‚ÉG‚ê‚½‚©‚Ç‚¤‚©
+        if (other.gameObject.tag == "Hammer" && canMove && !isInserted)
         {
-            Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");  // ˆÚ“®‘O‚ÌƒXƒeƒbƒv‚ğƒƒO‚Éo—Í
-            if (transform.position.y - currentMoveStep > minY)
+            Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}");
+
+            // ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã®Yä½ç½®ãŒminYã‚ˆã‚Šå¤§ãã„ã‹ç¢ºèª
+            if (transform.localPosition.y - currentMoveStep > minY)
             {
-                transform.position -= new Vector3(0, currentMoveStep, 0);
-                currentMoveStep *= decreaseFactor;  // ˆÚ“®ƒXƒeƒbƒv‚ğŒ¸­
-                Debug.Log($"After moving: currentMoveStep = {currentMoveStep}");  // ˆÚ“®Œã‚ÌƒXƒeƒbƒv‚ğƒƒO‚Éo—Í
+                // ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã§Ontaã‚’ä¸‹ã«ç§»å‹•ã•ã›ã‚‹
+                transform.localPosition -= new Vector3(0, currentMoveStep, 0);
+                currentMoveStep *= decreaseFactor;  // ç§»å‹•é‡ã‚’æ¸›å°‘ã•ã›ã‚‹
+                Debug.Log($"After moving: currentMoveStep = {currentMoveStep}");
 
-                soundManager.PlaySound(currentMoveStep);  // SoundManager‚ğ’Ê‚¶‚Ä‰¹‚ğÄ¶
-
-                canMove = false;  // ˆÚ“®ƒtƒ‰ƒO‚ğfalse‚Éİ’è
-                Invoke("ResetMovement", cooldown);  // —â‹pŠÔŒã‚ÉˆÚ“®ƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
+                soundManager.PlaySound(currentMoveStep);  // ã‚µã‚¦ãƒ³ãƒ‰å†ç”Ÿ
+                canMove = false;  // ä¸€åº¦å‹•ã„ãŸã‚‰æ¬¡ã®å‹•ä½œã¾ã§å¾…æ©Ÿ
+                Invoke("ResetMovement", cooldown);  // ã‚¯ãƒ¼ãƒ«ãƒ€ã‚¦ãƒ³å¾Œã«ç§»å‹•ã‚’ãƒªã‚»ãƒƒãƒˆ
             }
             else
             {
-                transform.position = new Vector3(transform.position.x, minY, transform.position.z);  // YÀ•W‚ªÅ¬’l‚É’B‚µ‚½ê‡
-
-                soundManager.PlaySound(currentMoveStep);  // SoundManager‚ğ’Ê‚¶‚ÄÅŒã‚Ì‰¹‚ğÄ¶
-
-                isInserted = CheckInsertion();  // ‘}“üƒ`ƒFƒbƒN
+                // æœ€å°ã®Yåº§æ¨™ã«é”ã—ãŸå ´åˆã€ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ã§Yä½ç½®ã‚’minYã«åˆ¶é™ã™ã‚‹
+                transform.localPosition = new Vector3(transform.localPosition.x, minY, transform.localPosition.z);
+                soundManager.PlaySound(currentMoveStep);  // ã‚µã‚¦ãƒ³ãƒ‰å†ç”Ÿ
+                isInserted = CheckInsertion();  // æŒ¿å…¥çŠ¶æ…‹ã®ç¢ºèª
             }
         }
     }
 
+
     void ResetMovement()
     {
-        canMove = true;  // ˆÚ“®ƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
+        canMove = true;  // Ë†Ãšâ€œÂ®Æ’tÆ’â€°Æ’Oâ€šÃ°Æ’Å Æ’ZÆ’bÆ’g
     }
 
-    // –Ê‚ğí‚éˆ—‚ğ’Ç‰Á
+    // â€“ÃŠâ€šÃ°ÂÃ­â€šÃ©ÂË†â€”Ââ€šÃ°â€™Ã‡â€°Ã
     public void CarveFace(float carvingDepth)
     {
-        carvingCount++;  // í‚è‰ñ”‚ğƒJƒEƒ“ƒg
-        initialMoveStep += carvingImpact;  // í‚è‚Ì‰e‹¿—Ê‚É‰‚¶‚Ä‰ŠúˆÚ“®‹——£‚ğ‘‰Á
-        decreaseFactor *= carvingDecreaseFactor;  // í‚é‚Ù‚ÇŒ¸­ŒW”‚à’²®
+        carvingCount++;  // ÂÃ­â€šÃ¨â€°Ã±Ââ€â€šÃ°Æ’JÆ’EÆ’â€œÆ’g
+        initialMoveStep += carvingImpact;  // ÂÃ­â€šÃ¨â€šÃŒâ€°eâ€¹Â¿â€”ÃŠâ€šÃ‰â€°Å¾â€šÂ¶â€šÃ„Ââ€°Å ÃºË†Ãšâ€œÂ®â€¹â€”â€”Â£â€šÃ°â€˜Ââ€°Ã
+        decreaseFactor *= carvingDecreaseFactor;  // ÂÃ­â€šÃ©â€šÃ™â€šÃ‡Å’Â¸ÂÂ­Å’WÂâ€â€šÃ â€™Â²ÂÂ®
 
-        // currentMoveStep ‚ğXV
+        // currentMoveStep â€šÃ°ÂXÂV
         currentMoveStep = initialMoveStep;
 
-        // AudioManager‚ğg‚Á‚Äí‚é‰¹‚ğÄ¶
+        // AudioManagerâ€šÃ°Å½gâ€šÃâ€šÃ„ÂÃ­â€šÃ©â€°Â¹â€šÃ°ÂÃ„ÂÂ¶
         if (audioManager != null)
         {
             audioManager.PlayCarvingSound(carvingCount);
@@ -74,15 +76,15 @@ public class OntaBehavior : MonoBehaviour
 
     bool CheckInsertion()
     {
-        // Menta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+        // Mentaâ€šÃŒË†ÃŠâ€™uâ€šÃ†Æ’TÆ’CÆ’Yâ€šÃ°Å½Ã¦â€œÂ¾
         Collider mentaCollider = menta.GetComponent<Collider>();
         Bounds mentaBounds = mentaCollider.bounds;
 
-        // Onta‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğæ“¾
+        // Ontaâ€šÃŒË†ÃŠâ€™uâ€šÃ†Æ’TÆ’CÆ’Yâ€šÃ°Å½Ã¦â€œÂ¾
         Collider ontaCollider = GetComponent<Collider>();
         Bounds ontaBounds = ontaCollider.bounds;
 
-        // Onta‚Ì’ê–Ê‚ªMenta‚Ìã–Ê‚Éû‚Ü‚Á‚Ä‚¢‚é‚©ƒ`ƒFƒbƒN
+        // Ontaâ€šÃŒâ€™Ãªâ€“ÃŠâ€šÂªMentaâ€šÃŒÂÃ£â€“ÃŠâ€šÃ‰Å½Ã»â€šÃœâ€šÃâ€šÃ„â€šÂ¢â€šÃ©â€šÂ©Æ’`Æ’FÆ’bÆ’N
         return ontaBounds.min.y <= mentaBounds.max.y;
     }
 }
