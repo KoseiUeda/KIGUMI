@@ -30973,8 +30973,6 @@ GameObject:
   - component: {fileID: 8218377437936291897}
   - component: {fileID: 8218377437936291896}
   - component: {fileID: 8218377437936291895}
-  - component: {fileID: 8218377437936291894}
-  - component: {fileID: 8218377437936291893}
   m_Layer: 0
   m_Name: Onta.003
   m_TagString: Untagged
@@ -30982,33 +30980,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8218377437936291893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8218377437936291892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 428e83f7919ce834c8feafa1e2ef3771, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8218377437936291894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8218377437936291892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9e83c59d5919c54a897f79ceaf41be7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  facePairs: []
-  highlightOffset: 0.01
-  moveDistance: 0.1
 --- !u!114 &8218377437936291895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31016,7 +30987,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8218377437936291892}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eaacb78cad6789f4680317dcfa510a73, type: 3}
   m_Name: 
@@ -31036,12 +31007,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialMoveStep: 0.02
   minY: 0.5
-  decreaseFactor: 0.94
-  soundManager: {fileID: 0}
-  audioManager: {fileID: 0}
+  decreaseFactor: 0.7
+  soundManager: {fileID: 1134094787}
+  audioManager: {fileID: 737981428}
   carvingCount: 0
   carvingDecreaseFactor: 0.98
-  menta: {fileID: 0}
+  menta: {fileID: 919132148582191722}
 --- !u!114 &8218377437936291897
 MonoBehaviour:
   m_ObjectHideFlags: 0
