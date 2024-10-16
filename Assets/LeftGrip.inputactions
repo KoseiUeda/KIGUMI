@@ -1,0 +1,34 @@
+{
+    "name": "LeftGrip",
+    "maps": [
+        {
+            "name": "LeftHand",
+            "id": "c45c12a4-c210-440f-a8ec-089ef652996b",
+            "actions": [
+                {
+                    "name": "LeftGrip",
+                    "type": "Value",
+                    "id": "3525a386-ab14-44da-8720-413e53bdee48",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6ab77102-98c5-45b2-a412-a816f2b29ba0",
+                    "path": "<XRController>{LeftHand}/{Grip}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftGrip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
