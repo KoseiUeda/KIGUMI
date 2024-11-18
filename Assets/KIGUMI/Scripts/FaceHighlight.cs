@@ -24,7 +24,7 @@ public class FaceHighlight : MonoBehaviour
     private DisplayVertices displayVertices; // DisplayVerticesスクリプトへの参照
     private Dictionary<int, GameObject> highlightObjects = new Dictionary<int, GameObject>(); // 各ペアごとに異なるハイライトオブジェクトを保持
     public float highlightOffset = 0.01f; // ハイライトを少し上に移動するオフセット
-    public float moveDistance = 0.1f; // 頂点を移動させる距離
+    public float moveDistance = 0.01f; // 頂点を移動させる距離
 
     private OntaBehavior ontaBehavior; // OntaBehaviorの参照
     private HashSet<int> activePairHashes = new HashSet<int>(); // アクティブなペアのハッシュを保持
@@ -101,8 +101,13 @@ public class FaceHighlight : MonoBehaviour
                 if (ontaBehavior != null)
                 {
                     float carvingDepth = 0.005f; // 例として0.005の深さで削る
-                    ontaBehavior.CarveFace(carvingDepth);
+                    ontaBehavior.CarveFace(carvingDepth); // CarveFaceメソッドを呼び出し
                 }
+                else
+                {
+                    Debug.LogError("OntaBehavior component not found.");
+                }
+
             }
         }
 

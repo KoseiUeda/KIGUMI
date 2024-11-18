@@ -31,21 +31,19 @@ public class OntaBehavior : MonoBehaviour
 
             if (transform.localPosition.y - currentMoveStep > minY)
             {
-                // MinYより大きい場合、下がる
                 transform.localPosition -= new Vector3(0, currentMoveStep, 0);
                 currentMoveStep *= decreaseFactor; // 移動ステップを減少
-                Debug.Log($"After moving: currentMoveStep = {currentMoveStep}"); // 移動後のステップを表示
+                Debug.Log($"After moving: currentMoveStep = {currentMoveStep}");
 
                 soundManager.PlaySound(currentMoveStep); // サウンドを再生
 
-                canMove = false; // 移動を一時的に無効化
+                canMove = false;
                 Invoke("ResetMovement", cooldown); // クールダウン後に移動をリセット
             }
             else
             {
-                // MinYに達したら位置を修正し、それ以上下がらないようにする
                 transform.localPosition = new Vector3(transform.localPosition.x, minY, transform.localPosition.z);
-                soundManager.PlaySound(currentMoveStep); // サウンドを再生
+                soundManager.PlaySound(currentMoveStep);
 
                 isInserted = CheckInsertion(); // 挿入されているかチェック
             }
@@ -57,42 +55,36 @@ public class OntaBehavior : MonoBehaviour
         canMove = true; // 移動を再び有効にする
     }
 
-    // 面を削る処理
     public void CarveFace(float carvingDepth)
     {
         carvingCount++; // 削り回数をカウント
         initialMoveStep += carvingImpact; // 移動ステップに影響を与える
         decreaseFactor *= carvingDecreaseFactor; // 減少係数を更新
 
-        // 現在の移動ステップを更新
-        currentMoveStep = initialMoveStep;
+        currentMoveStep = initialMoveStep; // 現在の移動ステップを更新
 
-        // 削り音を再生
         if (audioManager != null)
         {
-            audioManager.PlayCarvingSound(carvingCount);
+            audioManager.PlayCarvingSound(carvingCount); // 削り音を再生
         }
     }
 
     bool CheckInsertion()
     {
-        // Mentaのコライダーとサイズを取得
         Collider mentaCollider = menta.GetComponent<Collider>();
         Bounds mentaBounds = mentaCollider.bounds;
 
-        // Ontaのコライダーとサイズを取得
         Collider ontaCollider = GetComponent<Collider>();
         Bounds ontaBounds = ontaCollider.bounds;
 
-        // OntaがMentaの上にあるかをチェック
-        return ontaBounds.min.y <= mentaBounds.max.y;
+        return ontaBounds.min.y <= mentaBounds.max.y; // 挿入状態のチェック
     }
+
     public void ResetOnta()
     {
         currentMoveStep = initialMoveStep; // 初期の移動ステップにリセット
-        canMove = true; // 移動を再び有効にする
-        isInserted = false; // 挿入された状態をリセット
+        canMove = true;
+        isInserted = false;
         Debug.Log("OntaBehavior has been reset.");
     }
-
 }
