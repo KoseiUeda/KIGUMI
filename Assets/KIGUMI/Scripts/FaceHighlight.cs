@@ -31,6 +31,7 @@ public class FaceHighlight : MonoBehaviour
     private int currentPairHash = -1; // 現在ハイライトされているペアのハッシュ
     private List<int> currentTriangleIndices = new List<int>(); // 現在ハイライトされている三角形のインデックス
     private bool wasTriggerPressed = false; // 前のフレームでトリガーボタンが押されていたかどうか
+    public ControllerGuideFollow guideFollowScript;
 
     void Start()
     {
@@ -147,6 +148,7 @@ public class FaceHighlight : MonoBehaviour
                 {
                     Debug.LogWarning("Mesh is not readable. Please enable Read/Write in the import settings for mesh: " + otherMeshFilter.sharedMesh.name);
                 }
+                guideFollowScript.ShowCanvas();
             }
         }
     }
@@ -159,6 +161,7 @@ public class FaceHighlight : MonoBehaviour
             activePairHashes.Clear(); // アクティブなペアのハッシュをクリア
             currentPairHash = -1;
             currentTriangleIndices.Clear();
+            guideFollowScript.HideCanvas();
         }
     }
 
