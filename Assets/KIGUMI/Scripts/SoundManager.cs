@@ -14,14 +14,14 @@ public class SoundManager : MonoBehaviour
     public List<AudioData> audioDataList; // AudioDataのリスト
 
     // currentMoveStepに基づいて適切なAudioSourceを選択して再生
-    public void PlaySound(float currentMoveStep)
+    public void PlaySound(float stepAmount)
     {
-        foreach (var data in audioDataList) // audioDataListをループして適切なオーディオソースを検索
+        foreach (var data in audioDataList)
         {
-            if (currentMoveStep >= data.minStep && currentMoveStep <= data.maxStep)
+            if (stepAmount >= data.minStep && stepAmount <= data.maxStep)
             {
-                data.source.Play(); // 条件に合致したAudioSourceを再生
-                break; // 一致したらループを抜ける
+                data.source.Play();
+                break;
             }
         }
     }

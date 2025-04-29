@@ -10,6 +10,7 @@ Library: C:\Users\ACME\Documents\GitHub\KIGUMI\Temp\BurstOutput\tempburstlibs\ar
 --target-framework=NetFramework
 --float-mode=Fast
 --assembly-defines=Assembly-CSharp;
+--assembly-defines=com.sony.mocopi.receiver;
 --assembly-defines=Meta.XR.Audio;
 --assembly-defines=Meta.XR.BuildingBlocks;
 --assembly-defines=meta.xr.mrutilitykit;
@@ -70,6 +71,7 @@ Library: C:\Users\ACME\Documents\GitHub\KIGUMI\Temp\BurstOutput\tempburstlibs\ar
 --float-precision=Standard
 --target-framework=NetFramework
 --assembly-defines=Assembly-CSharp;
+--assembly-defines=com.sony.mocopi.receiver;
 --assembly-defines=Meta.XR.Audio;
 --assembly-defines=Meta.XR.BuildingBlocks;
 --assembly-defines=meta.xr.mrutilitykit;

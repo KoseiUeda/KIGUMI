@@ -22,33 +22,44 @@ public class OntaBehavior : MonoBehaviour
         currentMoveStep = initialMoveStep; // 移動ステップの初期化
         initialY = transform.localPosition.y; // 初期のローカルY位置を記録
     }
-
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Hammer" && canMove && !isInserted) // ハンマーが接触した場合のみ
+        if (other.gameObject.tag == "Hammer" && canMove && !isInserted)
         {
-            Debug.Log($"Before moving: currentMoveStep = {currentMoveStep}"); // 移動前のステップを表示
-
-            if (transform.localPosition.y - currentMoveStep > minY)
+            // １回あたりに下がる量を計算
+            float moveAmount = currentMoveStep;
+            // minY を越えて下がりすぎないように調整
+            if (transform.localPosition.y - moveAmount < minY)
             {
-                transform.localPosition -= new Vector3(0, currentMoveStep, 0);
-                currentMoveStep *= decreaseFactor; // 移動ステップを減少
-                Debug.Log($"After moving: currentMoveStep = {currentMoveStep}");
-
-                soundManager.PlaySound(currentMoveStep); // サウンドを再生
-
-                canMove = false;
-                Invoke("ResetMovement", cooldown); // クールダウン後に移動をリセット
+                moveAmount = transform.localPosition.y - minY;
             }
-            else
-            {
-                transform.localPosition = new Vector3(transform.localPosition.x, minY, transform.localPosition.z);
-                soundManager.PlaySound(currentMoveStep);
 
-                isInserted = CheckInsertion(); // 挿入されているかチェック
+            // 実際に移動
+            transform.localPosition -= new Vector3(0, moveAmount, 0);
+
+            // 移動ステップを減らす
+            currentMoveStep *= decreaseFactor;
+
+            // 下がった距離だけログ出力
+            Debug.Log($"Moved down: {moveAmount:F6}");
+
+            // → ここで moveAmount を渡す
+            soundManager.PlaySound(moveAmount);
+
+            canMove = false;
+            Invoke("ResetMovement", cooldown);
+
+            // minY に達していたら挿入完了チェック
+            if (Mathf.Approximately(transform.localPosition.y, minY))
+            {
+                isInserted = CheckInsertion();
             }
         }
     }
+
+
+
+
 
     void ResetMovement()
     {

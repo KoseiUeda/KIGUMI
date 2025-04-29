@@ -1,0 +1,62 @@
+{
+    "name": "New Controls",
+    "maps": [
+        {
+            "name": "LeftHand",
+            "id": "9ccc5e5a-4e00-49c2-a362-f61ebbb1d2f0",
+            "actions": [
+                {
+                    "name": "XButton",
+                    "type": "Button",
+                    "id": "219314d9-603e-45f0-b34e-d2db7f0b29fb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a3f0cdb7-061e-4908-91e5-ad635c180c40",
+                    "path": "<XRController>{LeftHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "XButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "RightHand",
+            "id": "e242d933-068e-4ae3-bb55-ef1f6eeea393",
+            "actions": [
+                {
+                    "name": "AButton",
+                    "type": "Button",
+                    "id": "755d4b85-9962-4aaf-a503-de22a9f0e52e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f2b50dab-0773-41eb-8d88-304c11cdd7ce",
+                    "path": "<XRController>{RightHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
