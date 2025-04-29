@@ -16,6 +16,9 @@ public class OntaBehavior : MonoBehaviour
     private bool isInserted = false; // 挿入されたかどうか
     public GameObject menta; // メンタのオブジェクト
     private float initialY; // 初期のローカルY位置
+    public System.Action OnZeroMove;
+    public float zeroEpsilon = 0.0001f;
+    public float CurrentMoveStep => currentMoveStep;
 
     void Start()
     {
@@ -43,7 +46,10 @@ public class OntaBehavior : MonoBehaviour
             // 下がった距離だけログ出力
             Debug.Log($"Moved down: {moveAmount:F6}");
 
-            // → ここで moveAmount を渡す
+           // ② moveAmount がほぼゼロならイベント呼び出し
+           if (moveAmount <= zeroEpsilon)
+               OnZeroMove?.Invoke();
+
             soundManager.PlaySound(moveAmount);
 
             canMove = false;
